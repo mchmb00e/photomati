@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoMati</title>
+    <link rel="shortcut icon" href="rsc/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="css/view.css">
+</head>
+<body>
+    <!--
+    <header>
+        <div class="icon">
+            <img src="rsc/favicon.svg" alt="Icon">
+            <h1>PHOTO<br>MATI</h1>
+        </div>
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#C1143A" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+        </div>
+    </header>
+    <hr>-->
+    <main>
+        <div class="option-1">
+            <div class="option-1-select" onclick="changeMatrix(0)"><p>Matriz</p></div>
+            <div class="option-1-select" onclick="changeMatrix(1)"><p>Sistema</p></div>
+        </div>
+        <div class="content">
+          <div class="content-aux">
+            <div id="matrix-content">
+            </div>
+            <div class="btn-add-col" onclick="addCol()">+</div>
+            <div class="btn-add-row" onclick="addRow()">+</div>
+          </div>
+        </div>
+        <div class="center">
+        <div class="keyboard">
+            <div class="key" onclick="keyPress(1)">1</div>
+            <div class="key" onclick="keyPress(2)">2</div>
+            <div class="key" onclick="keyPress(3)">3</div>
+            <div class="key" onclick="keyPress(4)">4</div>
+            <div class="key" onclick="keyPress(5)">5</div>
+            <div class="key" onclick="keyPress(6)">6</div>
+            <div class="key" onclick="keyPress(7)">7</div>
+            <div class="key" onclick="keyPress(8)">8</div>
+            <div class="key" onclick="keyPress(9)">9</div>
+            <div class="key" onclick="keyPress(0)">0</div>
+            <div class="key" onclick="keyPress('left')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+              </svg></div>
+            <div class="key" onclick="keyPress('right')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+              </svg></div>
+            <div class="key" onclick="keyPress('up')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+              </svg></div>
+            <div class="key" onclick="keyPress('down')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg></div>
+            <div class="key" onclick="keyPress('reset')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+              </svg> Reiniciar</div>
+            <div class="key" onclick="keyPress('done')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+              </svg> Resultado</div>
+            <div class="key" onclick="keyPress('+')">+</div>
+            <div class="key" onclick="keyPress('*')">x</div>
+            <div class="key" onclick="keyPress('/')">/</div>
+            <div class="key" onclick="keyPress('-')">-</div>
+            <div class="key" onclick="keyPress('-1')">A<sup>-1</sup></div>
+            <div class="key" onclick="keyPress('range')">Rango</div>
+            <div class="key" onclick="keyPress('stagger')">Escalonar</div>
+        </div>
+    </div>
+    </main>
+
+
+    <script src="js/main.js"></script>
+</body>
+</html>
