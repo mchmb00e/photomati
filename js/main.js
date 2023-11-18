@@ -5,14 +5,14 @@ const matrix = {
     'DOM': d.getElementById('matrix-content'),
     'content': [],
     'component': '<div class="cel-content"></div>',
-    'coor': []
+    'controller': []
 }
 
 const lengthMatrix = (M) => {
     var k = 0;
-    var len = M.length;
+    var len = matrix.content.length;
     for (let i = 0; i < len; i++) {
-        for (let j = 0; j < M[i].length ; j++) {
+        for (let j = 0; j < matrix.content[0].length ; j++) {
             k++
         }
     }
@@ -31,15 +31,15 @@ const changeMatrix = (x) => {
     }
 }
 
-const showMatrix = (M) => {
+const showMatrix = () => {
     let p = 0;
-    matrix.DOM.style.gridTemplateRows = 'repeat(' + matrix.coor[0] + ', 35px)'
-    matrix.DOM.style.gridTemplateColumns = 'repeat(' + matrix.coor[1] + ', 35px)'
-    for (let i = 0; i < lengthMatrix(M); i++) {
+    matrix.DOM.style.gridTemplateRows = 'repeat(' + matrix.content.length + ', 35px)'
+    matrix.DOM.style.gridTemplateColumns = 'repeat(' + matrix.content[0].length + ', 35px)'
+    for (let i = 0; i < lengthMatrix(matrix.content); i++) {
         matrix.DOM.innerHTML += '<div class="cel-content" onclick="selectCel(' + i + ')"></div>'
     }
-    for (let i = 0; i < matrix.coor[0]; i++) {
-        for (let j = 0; j < matrix.coor[1]; j++) {
+    for (let i = 0; i < matrix.content.length; i++) {
+        for (let j = 0; j < matrix.content[0].length ; j++) {
             cel[p].innerHTML = matrix.content[i][j];
             p++;
         }
@@ -49,8 +49,7 @@ const showMatrix = (M) => {
 
 //INIT
 
-matrix.content = [[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]];
-matrix.coor = [matrix.content.length, matrix.content[0].length]
+matrix.content = [[1,2,3],[4,5,6],[7,8,9]];
 
 changeMatrix(0)
-showMatrix(matrix.content)
+showMatrix()
