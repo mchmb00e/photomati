@@ -37,7 +37,7 @@ const makeMatrix = () => {
     for(let i = 0; i < matrix.size[0]; i++) {
         matrix.content[i] = []
         for (let j = 0; j < matrix.size[1]; j++) {
-            matrix.content[i][j] == null;
+            matrix.content[i][j] == "";
         }
     }
     showMatrix()
@@ -64,8 +64,8 @@ const changeMatrix = (x) => {
         optionShow[0].style.color = '#C1143A'
     }
 }
-const component = () => {
-    return '<div class="cel-content"></div>'
+const component = (i) => {
+    return '<div class="cel-content" onclick="selectCel(' + i + ')"></div>'
 }
 const showMatrix = () => {
     matrix.DOM.innerHTML = "";
@@ -75,7 +75,7 @@ const showMatrix = () => {
     matrix.DOM.style.gridTemplateRows = 'repeat(' + matrix.size[0] + ', 35px)'
     matrix.DOM.style.gridTemplateColumns = 'repeat(' + matrix.size[1] + ', 35px)'
     while (i < areaAux) {
-        matrix.DOM.innerHTML += component()
+        matrix.DOM.innerHTML += component(i)
         i++
     }
     for (let i = 0; i < matrix.size[0]; i++) {
@@ -139,6 +139,26 @@ const keyPress = (key) => {
         }
         console.log("size: " + matrix.size[0]*matrix.size[1])
         selectCel(aux)
+    } else if (key == 'reset') {
+        aux = 0;
+        cel[matrix.celSelect].innerHTML = ""
+        for (let i = 0; i < matrix.size[0]; i++) {
+            for (let j = 0; i < matrix.size[1]; i++) {
+                if (aux == celSelect) {
+                    matrix.content[i][j] = ""
+                }
+            }
+        }
+    } else if (0 <= key && key <= 9) {
+        aux = 0
+        cel[matrix.celSelect].innerHTML += key
+        for (let i = 0; i < matrix.size[0]; i++) {
+            for (let j = 0; i < matrix.size[1]; i++) {
+                if (aux == celSelect) {
+                    matrix.content[i][j] += toString(key)
+                }
+            }
+        }
     }
 }
 
