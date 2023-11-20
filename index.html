@@ -12,8 +12,8 @@
     <section class="popup-col-row">
       <h2>Modificar <span id="select-h2-content">columna</span></h2>
       <div class="show-col-row">
-        <div onclick="keyPress('col')" class="btn-show-col-row">3</div>
         <div onclick="keyPress('row')" class="btn-show-col-row">3</div>
+        <div onclick="keyPress('col')" class="btn-show-col-row">3</div>
       </div>
       <div class="arrow-col-row">
         <div onclick="keyPress('left-change')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
@@ -24,17 +24,17 @@
         </svg></div>
       </div>
       <div class="btn-col-row">
-        <div onclick="changeSize(1)">Cambiar tamaño</div>
-        <div onclick="changeSize(0)">Cerrar</div>
+        <div onclick="changeSize('1')">Cambiar tamaño</div>
+        <div onclick="changeSize('0')">Cerrar</div>
       </div>
     </section>
     <main id="main">
         <div class="option-1">
           <div>
-            <div class="option-1-select" onclick="changeMatrix(0)"><p>Matriz</p></div>
-            <div class="option-1-select" onclick="changeMatrix(1)"><p>Sistema</p></div>
+            <div class="option-1-select" onclick="changeMatrix('0')"><p>Matriz</p></div>
+            <div class="option-1-select" onclick="changeMatrix('1')"><p>Sistema</p></div>
           </div>
-          <div onclick="keyPress('changeRowAndCol')">
+          <div onclick="changeSize('2')">
             Tamaño
           </div>
         </div>

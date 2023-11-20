@@ -52,7 +52,7 @@ header div:last-child svg {
     justify-content: space-evenly;
     align-items: center;
 }
-.option-1 div[onclick="keyPress('changeRowAndCol')"] {
+.option-1 div[onclick="changeSize('2')"] {
     background-color: var(--primary);
     color: white;
     font-family: 'Inter';
@@ -65,7 +65,7 @@ header div:last-child svg {
     padding: 10px;
     border-radius: 10px;
 }
-.option-1 div[onclick="keyPress('changeRowAndCol')"]:hover {
+.option-1 div[onclick="changeSize('2')"]:hover {
     animation: 50ms keyPress linear;
 }
 .option-1 div {
@@ -228,6 +228,7 @@ header div:last-child svg {
 }
 
 .popup-col-row {
+    display: none;
     z-index: 3;
     position: fixed;
     top: 25%;
@@ -238,7 +239,6 @@ header div:last-child svg {
     border: 2px solid var(--primary);
     border-radius: 20px;
     padding: 20px;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -269,6 +269,7 @@ header div:last-child svg {
     font-size: 48px;
     padding: 10px 25px;
     border-radius: 10px;
+    animation: btnDown 600ms linear forwards;
 }
 @keyframes btnUp {
     0% {
@@ -332,6 +333,7 @@ header div:last-child svg {
     gap: 10px;
     padding: 0px 20px;
     margin-top: 50px;
+    margin-bottom: 20px;
 }
 .btn-col-row div {
     color: white;
@@ -353,7 +355,8 @@ header div:last-child svg {
     left: 0px;
     bottom: 0px;
     background-color: rgba(0, 0, 0, 0.3);
+    display: none;
 }
 #main {
-    filter: blur(3px);
+    filter: blur(0px);
 }
