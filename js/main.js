@@ -8,7 +8,9 @@ const matrix = {
     'controller': [],
     'size': [],
     'celSelect': null,
-    'matrixAux': []
+    'matrixAux': [],
+    'expanded': [],
+    'mode': null
 }
 const btnColRow = d.getElementsByClassName('btn-show-col-row')
 let keyModifySelect
@@ -29,29 +31,28 @@ const changeSize = (x) => {
         matrix.size[0] = sizeAux[0]
         matrix.size[1] = sizeAux[1]
         makeMatrix()
+        makeExpanded()
     }
 }
 const makeMatrix = () => {
-    console.log(matrix.size)
-    console.log(sizeAux)
     matrix.content = []
     for(let i = 0; i < matrix.size[0]; i++) {
         matrix.content[i] = []
         for (let j = 0; j < matrix.size[1]; j++) {
-            matrix.content[i][j] == null;
+            matrix.content[i][j] = "";
         }
     }
     showMatrix()
 }
-const lengthMatrix = (M) => {
-    var k = 0;
-    var len = matrix.size[0];
-    for (let i = 0; i < len; i++) {
-        for (let j = 0; j < matrix.size[1] ; j++) {
-            k++
-        }
+const makeExpanded = () => {
+    matrix.expanded = []
+    for (let i = 0; i < matrix.size[0]; i++) {
+        matrix.expanded[i] = ""
     }
-    return k
+    showMatrix()
+}
+const lengthMatrix = (M) => {
+    return matrix.size[0]*matrix.size[1]
 }
 
 const changeMatrix = (x) => {
@@ -60,16 +61,34 @@ const changeMatrix = (x) => {
     if (x == 0) {
         optionShow[1].style.backgroundColor = 'white'
         optionShow[1].style.color = '#C1143A'
+        matrix.mode = 'matrix'
     } else {
         optionShow[0].style.backgroundColor = 'white'
         optionShow[0].style.color = '#C1143A'
+        matrix.mode = 'system'
     }
+    showMatrix()
 }
 const component = (i) => {
     return '<div class="cel-content" onclick="selectCel(' + i + ')"></div>'
 }
+const systemComponent = (i) => {
+    let str = "";
+    for (let k = 0; k < i; k++) {
+        str = str + '<div class="expanded-cel" style="width: 33px; height: 33px;" onclick="selectExpandedCel(' + k + ')"></div>'
+    }
+    return str
+}
 const showMatrix = () => {
-    matrix.DOM.innerHTML = "";
+    matrix.DOM.innerHTML = null
+    d.getElementById('expanded').style.borderLeft = "none"
+    d.getElementById('expanded').style.display = "none"
+    if (matrix.mode == 'system') {
+        d.getElementById('expanded').style.display = "grid"
+        d.getElementById('expanded').style.borderLeft = "1px solid #C1143A"
+        d.getElementById('expanded').style.gridTemplateRows = "repeat(" + matrix.size[0] + ", 35px)"
+        d.getElementById('expanded').innerHTML = systemComponent(matrix.size[0]) // ARREGLAR MUESTREO DE MATRIZ POR PANTALLA
+    }
     let p = 0;
     let i = 0;
     let areaAux = matrix.size[0] * matrix.size[1]
@@ -81,12 +100,12 @@ const showMatrix = () => {
     }
     for (let i = 0; i < matrix.size[0]; i++) {
         for (let j = 0; j < matrix.size[1]; j++) {
-            cel[p].innerHTML = matrix.content[i][j];
+                cel[p].innerHTML = matrix.content[i][j]
             p++;
         }
-    }
-    for (let i = 0; i < areaAux; i++) {
-        cel[i].innerHTML = "";
+        if (matrix.mode == 'system') {
+            d.getElementsByClassName('expanded-cel')[i].innerHTML = matrix.expanded[i]
+        }
     }
 }
 
@@ -138,7 +157,6 @@ const keyPress = (key) => {
             }
             aux = aux + 1
         }
-        console.log("size: " + matrix.size[0]*matrix.size[1])
         selectCel(aux)
     } else if (key == 'reset') {
         aux = 0;
@@ -157,7 +175,8 @@ const keyPress = (key) => {
         for (let i = 0; i < matrix.size[0]; i++) {
             for (let j = 0; j < matrix.size[1]; j++) {
                 if (aux == matrix.celSelect) {
-                    matrix.content[i][j] += toString(key)
+                    matrix.content[i][j] += key
+                    console.log("Key: " + matrix.content[i][j])
                 }
                 aux++
             }
@@ -166,7 +185,6 @@ const keyPress = (key) => {
 }
 
 const selectCel = (x) => {
-    console.log(x)
     let aux  = matrix.celSelect
     cel[aux].style.border = '1px solid #C1143A'
     cel[aux].style.color = 'black'
@@ -178,7 +196,7 @@ const selectCel = (x) => {
 const isFull = () => {
     for (let i = 0; i < matrix.size[0]; i++) {
         for (let j = 0; j < matrix.size[1]; j++) {
-            if (matrix.content[i][j] == null) {
+            if (matrix.content[i][j] == "") {
                 return false
             }
         }
@@ -187,13 +205,13 @@ const isFull = () => {
 }
 
 //INIT
-
-matrix.content = [[null,null,null],[null,null,null],[null,null,null]];
-
+matrix.content = [["","",""],["","",""],["","",""]]
+matrix.expanded = ["", "", ""]
 matrix.celSelect = 0;
 sizeAux = [3, 3]
 matrix.size = [3, 3]
+matrix.mode = 'matrix'
 changeMatrix(0)
-showMatrix()
 keyPress('row')
 selectCel(4)
+makeMatrix()
