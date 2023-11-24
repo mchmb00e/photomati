@@ -8,6 +8,7 @@ const matrix = {
     'controller': [],
     'size': [],
     'celSelect': null,
+    'matrixAux': []
 }
 const btnColRow = d.getElementsByClassName('btn-show-col-row')
 let keyModifySelect
@@ -37,7 +38,7 @@ const makeMatrix = () => {
     for(let i = 0; i < matrix.size[0]; i++) {
         matrix.content[i] = []
         for (let j = 0; j < matrix.size[1]; j++) {
-            matrix.content[i][j] == "";
+            matrix.content[i][j] == null;
         }
     }
     showMatrix()
@@ -141,22 +142,24 @@ const keyPress = (key) => {
         selectCel(aux)
     } else if (key == 'reset') {
         aux = 0;
-        cel[matrix.celSelect].innerHTML = ""
+        cel[matrix.celSelect].innerHTML = null
         for (let i = 0; i < matrix.size[0]; i++) {
-            for (let j = 0; i < matrix.size[1]; i++) {
-                if (aux == celSelect) {
-                    matrix.content[i][j] = ""
+            for (let j = 0; j < matrix.size[1]; j++) {
+                if (aux == matrix.celSelect) {
+                    matrix.content[i][j] = null
                 }
+                aux++
             }
         }
     } else if (0 <= key && key <= 9) {
         aux = 0
         cel[matrix.celSelect].innerHTML += key
         for (let i = 0; i < matrix.size[0]; i++) {
-            for (let j = 0; i < matrix.size[1]; i++) {
-                if (aux == celSelect) {
+            for (let j = 0; j < matrix.size[1]; j++) {
+                if (aux == matrix.celSelect) {
                     matrix.content[i][j] += toString(key)
                 }
+                aux++
             }
         }
     }
@@ -171,6 +174,18 @@ const selectCel = (x) => {
     cel[x].style.color = '#C1143A'
     matrix.celSelect = x
 }
+
+const isFull = () => {
+    for (let i = 0; i < matrix.size[0]; i++) {
+        for (let j = 0; j < matrix.size[1]; j++) {
+            if (matrix.content[i][j] == null) {
+                return false
+            }
+        }
+    }
+    return true
+}
+
 //INIT
 
 matrix.content = [[null,null,null],[null,null,null],[null,null,null]];
