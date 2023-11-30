@@ -16,6 +16,18 @@ const btnColRow = d.getElementsByClassName('btn-show-col-row')
 let keyModifySelect
 let sizeAux = []
 
+
+const toRational = (s) => {
+    if (s.includes('/')) {
+        const [num, den] = s.split('/').map(Number);
+        return { num, den };
+    } else {
+        const num = Number(s);
+        const den = 1;
+        return { num, den };
+    }
+}
+
 const changeSize = (x) => {
     if (x == '2') {
         sizeAux = matrix.size
@@ -160,11 +172,11 @@ const keyPress = (key) => {
         selectCel(aux)
     } else if (key == 'reset') {
         aux = 0;
-        cel[matrix.celSelect].innerHTML = null
+        cel[matrix.celSelect].innerHTML = ""
         for (let i = 0; i < matrix.size[0]; i++) {
             for (let j = 0; j < matrix.size[1]; j++) {
                 if (aux == matrix.celSelect) {
-                    matrix.content[i][j] = null
+                    matrix.content[i][j] = ""
                 }
                 aux++
             }
@@ -180,6 +192,16 @@ const keyPress = (key) => {
                 }
                 aux++
             }
+        }
+    } else if (key == '/') {
+        aux = false
+        for (let i = 0; i < cel[matrix.celSelect].innerHTML.length; i++) {
+            if (cel[matrix.celSelect].innerHTML[i] == '/') {
+                aux = true
+            }
+        }
+         if (!aux && cel[matrix.celSelect].innerHTML.length != 0) {
+            cel[matrix.celSelect].innerHTML += '/'
         }
     }
 }
@@ -213,5 +235,6 @@ matrix.size = [3, 3]
 matrix.mode = 'matrix'
 changeMatrix(0)
 keyPress('row')
-selectCel(4)
+matrix.celSelect = 7
 makeMatrix()
+keyPress('up')
