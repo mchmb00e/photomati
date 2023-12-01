@@ -141,17 +141,20 @@ const gaussJordan = (matriz) => {
   let filaActual = 1;
   let columnaActual = 1;
 
+  let copiaMatriz = matriz;
   let pasos = [];
+  pasos.push({operaciones: [], resultado: matriz});
   let pasoActual = {operaciones: [], resultado: [[]]};
 
+
   while (columnaActual <= numeroColumnas && filaActual <= numeroFilas) {
-    let filaPivote = encontrarFilaPivote(matriz, filaActual, columnaActual);
+    let filaPivote = encontrarFilaPivote(copiaMatriz, filaActual, columnaActual);
 
     if (filaPivote) {
       if (filaActual !== filaPivote) {
         pasoActual.operaciones.push(`F${filaActual} <-> F${filaPivote}`);
-        intercambioFilas(matriz, filaActual, filaPivote);
-        pasoActual.resultado = matriz;
+        intercambioFilas(copiaMatriz, filaActual, filaPivote);
+        pasoActual.resultado = copiaMatriz;
         pasos.push(pasoActual);
         pasoActual = {operaciones: [], resultado: [[]]};
       }
@@ -159,18 +162,18 @@ const gaussJordan = (matriz) => {
 
       let bandera = false;
       for (let fila = 1; fila <= numeroFilas; fila++) {
-        let factor = multiplicar(matriz[fila - 1][columnaActual - 1], {num: -1, den: 1});
+        let factor = multiplicar(copiaMatriz[fila - 1][columnaActual - 1], {num: -1, den: 1});
         if (factor.num !== 0 && fila !== filaActual) {
           bandera = true;
           let stringFactor = Math.abs(factor.num) / factor.den === 1 ? "" : formatoFraccion({num: Math.abs(factor.num), den: factor.den}) + " ";
           
           pasoActual.operaciones.push(`F${fila} ${factor.num < 0 ? "-" : "+"} ${stringFactor}F${filaActual} -> F${fila}`);
-          sumarFilas(matriz, filaActual, fila, factor);
+          sumarFilas(copiaMatriz, filaActual, fila, factor);
         }
       }
 
       if (bandera) {
-        pasoActual.resultado = matriz;
+        pasoActual.resultado = copiaMatriz;
         pasos.push(pasoActual);
       }
 
@@ -178,22 +181,22 @@ const gaussJordan = (matriz) => {
       columnaActual++;
       filaActual++;
     } else {
-      let valorActual = matriz[filaActual - 1][columnaActual - 1];
+      let valorActual = copiaMatriz[filaActual - 1][columnaActual - 1];
 
       if (valorActual.num !== 0) {
         let factor = reducir({num: valorActual.den, den: valorActual.num});
         pasoActual.operaciones.push(`${formatoFraccion(factor)} F${filaActual} -> F${filaActual}`);
-        multiplicarFila(matriz, filaActual, factor);
+        multiplicarFila(copiaMatriz, filaActual, factor);
 
-        pasoActual.resultado = matriz;
+        pasoActual.resultado = copiaMatriz;
         pasos.push(pasoActual);
       } else {
-        let filaSiguienteValor = encontrarValorEnColumna(matriz, filaActual, columnaActual);
+        let filaSiguienteValor = encontrarValorEnColumna(copiaMatriz, filaActual, columnaActual);
 
         if (filaSiguienteValor) {
           pasoActual.operaciones.push(`F${filaActual} <-> F${filaSiguienteValor}`);
-          intercambioFilas(matriz, filaActual, filaSiguienteValor);
-          pasoActual.resultado = matriz;
+          intercambioFilas(copiaMatriz, filaActual, filaSiguienteValor);
+          pasoActual.resultado = copiaMatriz;
           pasos.push(pasoActual);
         } else {
           columnaActual++;
