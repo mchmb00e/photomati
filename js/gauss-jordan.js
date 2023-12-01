@@ -1,36 +1,9 @@
-// Matrices de prueba
+// FUCIONES FRACCIONES
 
-let mat1 = [
-  [1, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 1, 0],
-];
-
-let mat2 = [
-  [1, 0, 4, 5],
-  [0, 2, 6, 8],
-  [8, 9, 4, 9],
-];
-
-let mat3 = [
-  [3, 0, 3, 3, 3],
-  [-3, 1, -2, -4, -1],
-  [-5, 4, 9, 1, 13],
-  [7, 6, 13, 1, 19]
-];
-
-// Funciones fracciones
-
-const enteroAFraccion = (entero) => {
-  return {num: entero, den: 1};
-}
-
-const matrizEnterosAFraccion = (matriz) => {
-  return matriz = matriz.map((fila) => fila.map((elemento) => enteroAFraccion(elemento)));
-}
-
+// Función que entrega la representación en caracteres de una fracción
 const formatoFraccion = (frac) => frac.num + (frac.den === 1 ? "" : "/" + frac.den);
 
+// Algoritmo euclideano mejorado para encontrar máximo común divisor
 const mcd = (a, b) => {
   let x = Math.abs(a);
   let y = Math.abs(b);
@@ -49,8 +22,10 @@ const mcd = (a, b) => {
   }
 }
 
+// Función mínimo común múltiplo
 const mcm = (a, b) => a * b / mcd(a, b); 
 
+// Función para reducir una fracción
 const reducir = (frac) => {
   if (frac.num === 0) return {num: 0, den: 1};
   if (frac.num !== 0 && frac.den < 0) {
@@ -61,6 +36,7 @@ const reducir = (frac) => {
   return {num: frac.num / divisor, den: frac.den / divisor};
 }
 
+// Suma de fracciones
 const sumar = (frac1, frac2) => {
   denominador = mcm(frac1.den, frac2.den);
   let factor1 = denominador / frac1.den;
@@ -71,28 +47,18 @@ const sumar = (frac1, frac2) => {
   return reducir(resultado);
 }
 
+// Multiplicación de fracciones
 const multiplicar = (frac1, frac2) => {
   let resultado = {num: frac1.num * frac2.num, den: frac1.den * frac2.den};
   return reducir(resultado);
 }
 
-// Funciones matrices
+// FUNCIONES DE MATRICES
 
-const mostrar = (matriz) => {
-  matriz.forEach((fila) => console.log(fila));
-  console.log("");
-}
+// Función que entrega una copia de una matriz
+const copiarMatriz = (matriz) => matriz.slice().map(row => row.slice());
 
-const mostrarConFracciones = (matriz) => {
-  matriz.forEach((fila) => {
-    let linea = "[ ";
-    fila.forEach((elemento) => linea += (formatoFraccion(elemento) + " "));
-    linea += "]";
-    console.log(linea);
-  });
-  console.log("");
-}
-
+// Función que suma una fila a otra, multiplicada por un factor
 const sumarFilas = (matriz, origen, destino, factor) => {
   matriz[destino - 1].forEach((elemento, i) => {
     let sumando = multiplicar(matriz[origen - 1][i], factor);
@@ -100,12 +66,14 @@ const sumarFilas = (matriz, origen, destino, factor) => {
   });
 }
 
+// Función que intercabia las filas de una matriz
 const intercambioFilas = (matriz, filaX, filaY) => {
   let aux = matriz[filaX - 1];
   matriz[filaX - 1] = matriz[filaY - 1];
   matriz[filaY - 1] = aux;
 }
 
+// Función que multiplica todos los elementos de una fila por un factor
 const multiplicarFila = (matriz, fila, factor) => {
   matriz[fila - 1].forEach((elemento, i) => {
     let resultado = multiplicar(elemento, factor);
@@ -113,6 +81,7 @@ const multiplicarFila = (matriz, fila, factor) => {
   });
 }
 
+// Función que encuentra un 1 en una columna de una matriz
 const encontrarFilaPivote = (matriz, filaDesde, columna) => {
   let numeroFila;
   for (let fila = filaDesde; fila <= matriz.length; fila++)
@@ -124,6 +93,7 @@ const encontrarFilaPivote = (matriz, filaDesde, columna) => {
   return numeroFila;
 }
 
+// Función que encuentra el primer valor no nulo siguiente en una columna 
 const encontrarValorEnColumna = (matriz, filaDesde, columna) => {
   let numeroFila;
   for (let fila = filaDesde; fila <= matriz.length; fila++)
@@ -135,75 +105,115 @@ const encontrarValorEnColumna = (matriz, filaDesde, columna) => {
   return numeroFila;
 }
 
+// Función que convierte una matriz a su versión escalonada reducida por filas
 const gaussJordan = (matriz) => {
-  console.log(matriz)
+  // Obteniendo orden de la matriz
   let numeroFilas = matriz.length;
   let numeroColumnas = matriz[0].length;
+  // Copiando matriz
+  let copiaMatriz = copiarMatriz(matriz);
+  // Arreglo de pasos para llegar al resultado
+  let pasos = [];
+  // Ingresamos en el primer paso la matriz original sin operaciones
+  pasos.push({operaciones: [], resultado: copiarMatriz(matriz)});
+  // Preparamos una variable que guardará el paso actual del algoritmo
+  let pasoActual = {operaciones: [], resultado: []};
+  
+  
+  // Comenzamos en el elemento 1,1
   let filaActual = 1;
   let columnaActual = 1;
-  let copiaMatriz = matriz;
-  let pasos = [];
-  pasos.push({operaciones: [], resultado: matriz});
-  let pasoActual = {operaciones: [], resultado: [[]]};
-
-
+  // Mientras estemos dentro de la matriz
   while (columnaActual <= numeroColumnas && filaActual <= numeroFilas) {
+    // Intentamos encontrar un pivote dentro la columna (1)
     let filaPivote = encontrarFilaPivote(copiaMatriz, filaActual, columnaActual);
 
+    // Si se encontró un pivote
     if (filaPivote) {
+      // Si el pivote está en una fila diferente a la actual
       if (filaActual !== filaPivote) {
-        pasoActual.operaciones.push(`F${filaActual} <-> F${filaPivote}`);
+        // Intercambiamos la fila por la fila del pivote
         intercambioFilas(copiaMatriz, filaActual, filaPivote);
-        pasoActual.resultado = copiaMatriz;
+        // Ingresamos el mensaje de la operación al paso actual
+        pasoActual.operaciones.push(`F${filaActual} <-> F${filaPivote}`);
+        // Guardamos el resultado de la operación
+        pasoActual.resultado = copiarMatriz(copiaMatriz);
+        // Ingresamos el paso actual al arreglo de pasos
         pasos.push(pasoActual);
-        pasoActual = {operaciones: [], resultado: [[]]};
+        // Limpiamos el paso actual
+        pasoActual = {operaciones: [], resultado: []};
       }
 
-
-      let bandera = false;
+      // Bandera que identifica si se generaron operaciones fila en el paso actual
+      let banderaOperaciones = false;
+      // Revisamos la columna fila por fila para hacer ceros con el pivote
       for (let fila = 1; fila <= numeroFilas; fila++) {
-        let factor = multiplicar(copiaMatriz[fila - 1][columnaActual - 1], {num: -1, den: 1});
-        if (factor.num !== 0 && fila !== filaActual) {
-          bandera = true;
-          let stringFactor = Math.abs(factor.num) / factor.den === 1 ? "" : formatoFraccion({num: Math.abs(factor.num), den: factor.den}) + " ";
-          
-          pasoActual.operaciones.push(`F${fila} ${factor.num < 0 ? "-" : "+"} ${stringFactor}F${filaActual} -> F${fila}`);
+        // Si no es la fila pivote y el valor de la fila es distinto de cero 
+        if (fila !== filaActual && copiaMatriz[fila - 1][columnaActual - 1].num !== 0) {
+          // Encontramos el factor por el cual tendremos que multiplicar 
+          // la fila pivote para generar ceros en la columna
+          let factor = multiplicar(copiaMatriz[fila - 1][columnaActual - 1], {num: -1, den: 1});
+          // Generamos un cero sumando la fila multiplicada por el factor
           sumarFilas(copiaMatriz, filaActual, fila, factor);
+          // Formateamos el factor para el mensaje de la operación actual
+          let stringFactor = Math.abs(factor.num) / factor.den === 1 ? "" : formatoFraccion({num: Math.abs(factor.num), den: factor.den}) + " ";
+          // Agregamos la operación actual al paso actual
+          pasoActual.operaciones.push(`F${fila} ${factor.num < 0 ? "-" : "+"} ${stringFactor}F${filaActual} -> F${fila}`);
+          // Marcamos que se realizaron operaciones
+          banderaOperaciones = true;
         }
       }
 
-      if (bandera) {
-        pasoActual.resultado = copiaMatriz;
+      // Una vez realizadas las operaciones
+      if (banderaOperaciones) {
+        // Guardamos la matriz resultante del paso actual
+        pasoActual.resultado = copiarMatriz(copiaMatriz);
+        // Guardamos el paso completo con sus operaciones
         pasos.push(pasoActual);
       }
-
-      pasoActual = {operaciones: [], resultado: [[]]};
-      columnaActual++;
+      // Limpiamos el paso actual
+      pasoActual = {operaciones: [], resultado: []};
+      // Avanzamos una columna y una fila
       filaActual++;
-    } else {
+      columnaActual++;
+    } else { // En el caso de que no exista pivote
+      // Obtenemos el valor correspondiente a la fila y columna actuales
       let valorActual = copiaMatriz[filaActual - 1][columnaActual - 1];
 
+      // Si el valor es distinto de cero
       if (valorActual.num !== 0) {
+        // Dejamos el inverso multiplicativo del valor como factor
         let factor = reducir({num: valorActual.den, den: valorActual.num});
-        pasoActual.operaciones.push(`${formatoFraccion(factor)} F${filaActual} -> F${filaActual}`);
+        // Multiplicamos la fila por el factor para generar un uno
         multiplicarFila(copiaMatriz, filaActual, factor);
-
-        pasoActual.resultado = copiaMatriz;
+        // Agregamos la operación al paso actual
+        pasoActual.operaciones.push(`${formatoFraccion(factor)} F${filaActual} -> F${filaActual}`);
+        // Guardamos el resultado de las operaciones en el paso actual
+        pasoActual.resultado = copiarMatriz(copiaMatriz);
+        // Agregamos el paso actual al arreglo de pasos
         pasos.push(pasoActual);
-      } else {
+      } else { // Si el valor es cero
+        // Encontramos la fila siguiente con un valor distinto de cero
         let filaSiguienteValor = encontrarValorEnColumna(copiaMatriz, filaActual, columnaActual);
-
+        // Si existe alguna fila que cumpla la condición
         if (filaSiguienteValor) {
-          pasoActual.operaciones.push(`F${filaActual} <-> F${filaSiguienteValor}`);
+          // Intercambiamos filas
           intercambioFilas(copiaMatriz, filaActual, filaSiguienteValor);
-          pasoActual.resultado = copiaMatriz;
+          // Guardamos la operación en el paso actual
+          pasoActual.operaciones.push(`F${filaActual} <-> F${filaSiguienteValor}`);
+          // Guardamos el resultado de la operación en el paso actual
+          pasoActual.resultado = copiarMatriz(copiaMatriz);
+          // Agregamos el paso actual al arreglo de pasos
           pasos.push(pasoActual);
-        } else {
+        } else { // Si no existen ceros por generar
+          // Avanzamos una columna
           columnaActual++;
         }
       }
-      pasoActual = {operaciones: [], resultado: [[]]};
+      // Limpiamos el paso actual
+      pasoActual = {operaciones: [], resultado: []};
     }
   }
+  // Retornamos el arreglo de pasos
   return pasos;
 }
