@@ -257,5 +257,4 @@ keyPress('row')
 matrix.celSelect = 7
 makeMatrix()
 keyPress('up')
-
 console.log(gaussJordan(example))
