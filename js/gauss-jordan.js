@@ -204,5 +204,3 @@ const gaussJordan = (matriz) => {
   }
   return pasos;
 }
-
-console.log(gaussJordan(matrizEnterosAFraccion(mat3)));

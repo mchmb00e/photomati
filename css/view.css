@@ -317,8 +317,43 @@ header div:last-child svg {
     left: 0px;
     bottom: 0px;
     background-color: rgba(0, 0, 0, 0.3);
-    display: none;
+    display: block;
 }
 #main {
-    filter: blur(0px);
+    filter: blur(2px);
+}
+
+#showResult {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 85% 15%;
+    position: fixed;
+    top: 10%;
+    bottom: 10%;
+    left: 10%;
+    right: 10%;
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    background-color: white;
+    z-index: 4;
+}
+#steps {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+#steps-controller {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#steps-controller div {
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    font-family: 'Inter';
+    font-weight: bold;
+    color: var(--primary);
+    padding: 10px 20px;
 }

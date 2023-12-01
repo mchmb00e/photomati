@@ -18,7 +18,7 @@ let sizeAux = []
 
 
 const toRational = (s) => {
-    if (s.includes('/')) {
+    if (typeof s === 'string' && s.includes('/')) {
         const [num, den] = s.split('/').map(Number);
         return { num, den };
     } else {
@@ -27,6 +27,7 @@ const toRational = (s) => {
         return { num, den };
     }
 }
+
 
 const changeSize = (x) => {
     if (x == '2') {
@@ -226,7 +227,25 @@ const isFull = () => {
     return true
 }
 
+
+const showSteps = (stp) => {
+
+}
+
 //INIT
+let example = [
+    ['2','3','4'],
+    ['4','1','5'],
+    ['9','4','1']
+]
+for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+        example[i][j] = toRational(example[i][j])
+    }
+}
+
+
+
 matrix.content = [["","",""],["","",""],["","",""]]
 matrix.expanded = ["", "", ""]
 matrix.celSelect = 0;
@@ -238,3 +257,5 @@ keyPress('row')
 matrix.celSelect = 7
 makeMatrix()
 keyPress('up')
+
+console.log(gaussJordan(example))
