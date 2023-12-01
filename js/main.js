@@ -257,4 +257,39 @@ keyPress('row')
 matrix.celSelect = 7
 makeMatrix()
 keyPress('up')
-console.log(gaussJordan(example))
+
+const formatoFraccionHTML = (frac) => {
+    return frac.den === 1 ? frac.num : `<sup>${frac.num}</sup>&frasl;<sub>${frac.den}</sub>`;
+}
+
+d.addEventListener("DOMContentLoaded", () => {
+    let pasos = gaussJordan(example);
+    let divPasos = d.getElementById("steps");
+    divPasos.innerHTML += "<h3>Matriz original</h3>";
+    divPasos.style.fontWeight = "bold";
+    divPasos.style.overflowY = "scroll";
+    pasos.forEach((paso) => {
+        let pOperaciones = d.createElement("p");
+        let divMatriz = d.createElement("div");
+        divMatriz.style.width = "25%";
+        divMatriz.style.borderLeft = "2px solid black";
+        divMatriz.style.borderRight = "2px solid black";
+        divMatriz.style.borderRadius = "5%";
+        divMatriz.style.marginBottom = "50px";
+        divMatriz.style.padding = "10px";
+        paso.operaciones.forEach((operacion) => pOperaciones.innerHTML += `${operacion}<br>`);
+        paso.resultado.forEach((fila) => {
+            let divFila = d.createElement("div");
+            divFila.style.display = "flex";
+            divFila.style.justifyContent = "space-between";
+            divFila.style.margin = "10px 0px 10px 0px";
+            divFila.innerHTML += fila.reduce((resultado, elemento) => {
+                return resultado + `<div>${formatoFraccionHTML(elemento)}</div>`;
+            }, "");
+            divMatriz.appendChild(divFila);
+        });
+        divPasos.appendChild(pOperaciones);
+        divPasos.appendChild(divMatriz);
+    });
+
+});
