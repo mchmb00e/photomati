@@ -136,7 +136,6 @@ const encontrarValorEnColumna = (matriz, filaDesde, columna) => {
 }
 
 const gaussJordan = (matriz) => {
-  console.log(matriz)
   let numeroFilas = matriz.length;
   let numeroColumnas = matriz[0].length;
   let filaActual = 1;
