@@ -10,7 +10,8 @@ const matrix = {
     'celSelect': null,
     'matrixAux': [],
     'expanded': [],
-    'mode': null
+    'mode': null,
+    'operation': null
 }
 const btnColRow = d.getElementsByClassName('btn-show-col-row')
 let keyModifySelect
@@ -204,6 +205,8 @@ const keyPress = (key) => {
          if (!aux && cel[matrix.celSelect].innerHTML.length != 0) {
             cel[matrix.celSelect].innerHTML += '/'
         }
+    } else if (key == 'done') {
+        showSteps();
     }
 }
 
@@ -227,17 +230,37 @@ const isFull = () => {
     return true
 }
 
-
-const showSteps = (stp) => {
-
+const formatoFraccionHTML = (frac) => {
+    return frac.den === 1 ? frac.num : `<sup>${frac.num}</sup>&frasl;<sub>${frac.den}</sub>`;
+}
+const dropdownSteps = (i) => {
+    return `<section class="drop">
+    <div>
+        <p id="1">
+            Paso ${i}
+        </p>
+    </div>
+    <span cont-id="cont_1">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex maxime quasi dignissimos cumque libero alias consequuntur
+    </span>
+</section>
+`
+}
+const showSteps = (A) => {
+    let stepsContent = d.getElementById('steps');
+    pasos = gaussJordan(A);
+    console.log(pasos);
+    for (let i = 0; i < pasos.length; i++) {
+        stepsContent.innerHTML += dropdownSteps(i+1);
+    }
 }
 
-//INIT
 let example = [
     ['2','3','4'],
     ['4','1','5'],
     ['9','4','1']
 ]
+//INIT
 for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
         example[i][j] = toRational(example[i][j])
@@ -257,11 +280,10 @@ keyPress('row')
 matrix.celSelect = 7
 makeMatrix()
 keyPress('up')
+showSteps(example)
 
-const formatoFraccionHTML = (frac) => {
-    return frac.den === 1 ? frac.num : `<sup>${frac.num}</sup>&frasl;<sub>${frac.den}</sub>`;
-}
 
+/*
 d.addEventListener("DOMContentLoaded", () => {
     let pasos = gaussJordan(example);
     let divPasos = d.getElementById("steps");
@@ -293,3 +315,4 @@ d.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+*/

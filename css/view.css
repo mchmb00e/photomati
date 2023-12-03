@@ -342,7 +342,8 @@ header div:last-child svg {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
+    overflow-y: scroll;
 }
 #steps-controller {
     display: flex;
@@ -356,4 +357,24 @@ header div:last-child svg {
     font-weight: bold;
     color: var(--primary);
     padding: 10px 20px;
+}
+
+.drop {
+	margin: 10px;
+    border: 2px solid var(--primary);
+    border-radius: 5px;
+}
+.drop p {
+    display: block;
+    color: var(--primary);
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Inter';
+}
+.drop div, span {
+    padding: 10px;
+    border: 1px solid #eee;
+    border-bottom: 0; 
+    background-color: #fff;
+    display: block;
 }
