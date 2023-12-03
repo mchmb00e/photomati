@@ -217,3 +217,16 @@ const gaussJordan = (matriz) => {
   // Retornamos el arreglo de pasos
   return pasos;
 }
+
+// Función que encuentra el rango de una matriz escalonada reducida por filas
+const rango = (matrizERF) => {
+  let resultado = 0;
+
+  // Por cada elemento de la fila, si encontramos un valor distinto de cero,
+  // se suma uno al resultado y continuamos con la fila siguiente
+  matrizERF.forEach((fila) => {
+    fila.every((elemento) => elemento.num ? resultado++ && false : true);
+  });
+
+  return resultado;
+}
