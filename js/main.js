@@ -14,8 +14,18 @@ const matrix = {
     'celSelect': null,
     'matrixAux': [],
     'expanded': [],
+<<<<<<< HEAD
     'mode': null
 };
+=======
+    'mode': null,
+    'operation': null
+}
+const btnColRow = d.getElementsByClassName('btn-show-col-row')
+let keyModifySelect
+let sizeAux = []
+
+>>>>>>> prueba-visualizacion
 
 const toRational = (s) => {
     if (typeof s === 'string' && s.includes('/')) {
@@ -209,6 +219,8 @@ const keyPress = (key) => {
         if (!aux && cel[matrix.celSelect].innerHTML.length != 0) {
             cel[matrix.celSelect].innerHTML += '/';
         }
+    } else if (key == 'done') {
+        showSteps();
     }
 };
 
@@ -229,6 +241,7 @@ const isFull = () => {
             }
         }
     }
+<<<<<<< HEAD
     return true;
 };
 
@@ -239,11 +252,42 @@ const showSteps = (stp) => {
 // INIT
 
 /*
+=======
+    return true
+}
+
+const formatoFraccionHTML = (frac) => {
+    return frac.den === 1 ? frac.num : `<sup>${frac.num}</sup>&frasl;<sub>${frac.den}</sub>`;
+}
+const dropdownSteps = (i) => {
+    return `<section class="drop">
+    <div>
+        <p id="1">
+            Paso ${i}
+        </p>
+    </div>
+    <span cont-id="cont_1">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex maxime quasi dignissimos cumque libero alias consequuntur
+    </span>
+</section>
+`
+}
+const showSteps = (A) => {
+    let stepsContent = d.getElementById('steps');
+    pasos = gaussJordan(A);
+    console.log(pasos);
+    for (let i = 0; i < pasos.length; i++) {
+        stepsContent.innerHTML += dropdownSteps(i+1);
+    }
+}
+
+>>>>>>> prueba-visualizacion
 let example = [
     ['2','3','4'],
     ['4','1','5'],
     ['9','4','1']
 ]
+//INIT
 for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
         example[i][j] = toRational(example[i][j]);
@@ -254,6 +298,7 @@ for (let i = 0; i < 3; i++) {
 matrix.content = [["", "", ""], ["", "", ""], ["", "", ""]];
 matrix.expanded = ["", "", ""];
 matrix.celSelect = 0;
+<<<<<<< HEAD
 sizeAux = [3, 3];
 matrix.size = [3, 3];
 matrix.mode = 'matrix';
@@ -263,3 +308,49 @@ matrix.celSelect = 7;
 makeMatrix();
 keyPress('up');
 console.log(gaussJordan(example));
+=======
+sizeAux = [3, 3]
+matrix.size = [3, 3]
+matrix.mode = 'matrix'
+changeMatrix(0)
+keyPress('row')
+matrix.celSelect = 7
+makeMatrix()
+keyPress('up')
+showSteps(example)
+
+
+/*
+d.addEventListener("DOMContentLoaded", () => {
+    let pasos = gaussJordan(example);
+    let divPasos = d.getElementById("steps");
+    divPasos.innerHTML += "<h3>Matriz original</h3>";
+    divPasos.style.fontWeight = "bold";
+    divPasos.style.overflowY = "scroll";
+    pasos.forEach((paso) => {
+        let pOperaciones = d.createElement("p");
+        let divMatriz = d.createElement("div");
+        divMatriz.style.width = "25%";
+        divMatriz.style.borderLeft = "2px solid black";
+        divMatriz.style.borderRight = "2px solid black";
+        divMatriz.style.borderRadius = "5%";
+        divMatriz.style.marginBottom = "50px";
+        divMatriz.style.padding = "10px";
+        paso.operaciones.forEach((operacion) => pOperaciones.innerHTML += `${operacion}<br>`);
+        paso.resultado.forEach((fila) => {
+            let divFila = d.createElement("div");
+            divFila.style.display = "flex";
+            divFila.style.justifyContent = "space-between";
+            divFila.style.margin = "10px 0px 10px 0px";
+            divFila.innerHTML += fila.reduce((resultado, elemento) => {
+                return resultado + `<div>${formatoFraccionHTML(elemento)}</div>`;
+            }, "");
+            divMatriz.appendChild(divFila);
+        });
+        divPasos.appendChild(pOperaciones);
+        divPasos.appendChild(divMatriz);
+    });
+
+});
+*/
+>>>>>>> prueba-visualizacion
