@@ -230,3 +230,62 @@ const rango = (matrizERF) => {
 
   return resultado;
 }
+
+const generarSoluciones = (matrizAmpliadaERF, rango) => {
+  let letras = ["a", "b", "c", "d", "e", "f"];
+  let nColumnas = matrizAmpliadaERF[0].length;
+  let soluciones = [];
+
+  for (let i = 0; i < rango; i++) {
+    let solucion = "";
+    for (let j = 0; j < nColumnas; j++) {
+      let elemento = matrizAmpliadaERF[i][j];
+      if (j === nColumnas - 1) {
+        solucion += " = " + formatoFraccion(elemento);
+      } else {
+        if (elemento.num !== 0) {
+          if (solucion.length === 0) {
+            if (elemento.num === -1 && elemento.den === 1) solucion += "-";
+            else if (elemento.num !== 1 && elemento.den !== 1)
+              solucion += formatoFraccion({num: Math.abs(elemento.num), den: elemento.den});
+            solucion += letras[j];
+          } else {
+            if (elemento.num > 0) {
+              solucion += " + " + formatoFraccion(elemento) + letras[j];
+            } else {
+              solucion += " - " + formatoFraccion({num: Math.abs(elemento.num), den: elemento.den});
+              solucion += letras[j];
+            }
+          }
+        }
+      }
+    }
+    soluciones.push(solucion);
+  }
+  return soluciones;
+} 
+
+const analizar = (matrizAmpliadaERF) => {
+  let A = matrizAmpliadaERF.slice().map(row => row.slice(0, -1));
+  let nVariables = A[0].length;
+  let pA = rango(A);
+  let pAb = rango(matrizAmpliadaERF);
+  let resultado = {tipo: "", soluciones: []};
+
+  // Si el rango de la matriz es igual al de la ampliada
+  if (pA === pAb) {
+    // Si el rango de la matriz es igual al número de variables
+    if (pA === nVariables) {
+      // Caso solución unica
+      resultado.tipo = "Solución única";
+    } else if (pA < nVariables) {
+      // Caso infinitas soluciones
+      resultado.tipo = "Infinitas soluciones";
+    }
+    resultado.soluciones = generarSoluciones(matrizAmpliadaERF, pA);
+
+  } else {
+    resultado.tipo = "No tiene solución.";
+  } 
+  return resultado;
+}
