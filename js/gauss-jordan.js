@@ -251,9 +251,9 @@ const generarSoluciones = (matrizAmpliadaERF, rango) => {
             solucion += letras[j];
           } else {
             if (elemento.num > 0) {
-              solucion += " + " + formatoFraccion(elemento) + letras[j];
+              solucion += ` + ${elemento.num === 1 ? "" : formatoFraccion(elemento)}` + letras[j];
             } else {
-              solucion += " - " + formatoFraccion({num: Math.abs(elemento.num), den: elemento.den});
+              solucion += ` - ${elemento.num === -1 ? "" : formatoFraccion({num: Math.abs(elemento.num), den: elemento.den})}`;
               solucion += letras[j];
             }
           }

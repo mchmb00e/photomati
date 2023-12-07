@@ -234,12 +234,12 @@ const showSteps = (stp) => {
 
 //INIT
 let example = [
-    ['2','3','4'],
-    ['4','1','5'],
-    ['9','4','1']
+    ['1','2','-1', '0'],
+    ['0','-1','1', '0'],
+    ['7','0','3', '0']
 ]
-for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
+for (let i = 0; i < example.length; i++) {
+    for (let j = 0; j < example[0].length; j++) {
         example[i][j] = toRational(example[i][j])
     }
 }
@@ -257,4 +257,7 @@ keyPress('row')
 matrix.celSelect = 7
 makeMatrix()
 keyPress('up')
+
+console.log(example)
 console.log(gaussJordan(example))
+console.log(analizar(example))
