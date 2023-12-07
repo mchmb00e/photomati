@@ -234,9 +234,9 @@ const showSteps = (stp) => {
 
 //INIT
 let example = [
-    ['1','2','-1', '0'],
-    ['0','-1','1', '0'],
-    ['7','0','3', '0']
+    ['1','2','-1'],
+    ['0','-1','1'],
+    ['7','0','3']
 ]
 for (let i = 0; i < example.length; i++) {
     for (let j = 0; j < example[0].length; j++) {
@@ -259,5 +259,8 @@ makeMatrix()
 keyPress('up')
 
 console.log(example)
-console.log(gaussJordan(example))
-console.log(analizar(example))
+let pasos = gaussJordan(example);
+console.log(pasos[pasos.length - 1].resultado);
+console.log(analizarAmpliada(pasos[pasos.length - 1].resultado));
+
+console.log(invertir(example));

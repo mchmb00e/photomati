@@ -56,7 +56,7 @@ const multiplicar = (frac1, frac2) => {
 // FUNCIONES DE MATRICES
 
 // Función que entrega una copia de una matriz
-const copiarMatriz = (matriz) => matriz.slice().map(row => row.slice());
+const copiarMatriz = (matriz) => matriz.slice().map(fila => fila.slice());
 
 // Función que suma una fila a otra, multiplicada por un factor
 const sumarFilas = (matriz, origen, destino, factor) => {
@@ -265,7 +265,7 @@ const generarSoluciones = (matrizAmpliadaERF, rango) => {
   return soluciones;
 } 
 
-const analizar = (matrizAmpliadaERF) => {
+const analizarAmpliada = (matrizAmpliadaERF) => {
   let A = matrizAmpliadaERF.slice().map(row => row.slice(0, -1));
   let nVariables = A[0].length;
   let pA = rango(A);
@@ -288,4 +288,46 @@ const analizar = (matrizAmpliadaERF) => {
     resultado.tipo = "No tiene solución.";
   } 
   return resultado;
+}
+
+const comprobarIdentidad = (identidad) => {
+  identidad.forEach((fila, i) => {
+    fila.forEach((elemento, j) => {
+      if (i === j) {
+        if (elemento !== 1) return false;  
+      } else {
+        if (elemento !== 0) return false;
+      }
+    });
+  });
+  return true;
+}
+
+const invertir = (matriz) => {
+  let numeroFilas = matriz.length;
+  let numeroColumnas = matriz[0].length;
+
+  if (numeroFilas !== numeroColumnas) {
+    return {pasos: [], tipo: "No invertible", resultado: []}
+  } else {
+    let matrizAmpliada = matriz.slice().map((fila, i) => {
+      let filaIdentidad = new Array(numeroColumnas).fill({num: 0, den: 1});
+      filaIdentidad[i] = {num: 1, den: 1};
+      return fila.concat(filaIdentidad);
+    });
+
+    let retorno = {pasos: [], tipo: "", inversa: []};
+    
+    let pasos = gaussJordan(matrizAmpliada);
+    retorno.pasos = pasos;
+
+    let identidad = pasos[pasos.length - 1].resultado.map((fila) => fila.slice(0, numeroFilas));
+    if (comprobarIdentidad(identidad)) {
+      retorno.inversa = pasos[pasos.length - 1].resultado.map((fila) => fila.slice(numeroFilas, numeroFilas * 2));
+      retorno.tipo = "Invertible";
+    } else {
+      retorno.tipo = "No invertible";
+    }
+    return retorno;
+  }
 }
