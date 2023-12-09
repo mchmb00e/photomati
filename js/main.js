@@ -73,6 +73,7 @@ const changeMatrix = (x) => {
             matrix.size[1]--;
         }
         matrix.mode = 'matrix';
+        d.getElementById('content-keyboard').innerHTML = keyboard.matrix
     } else {
         optionShow[0].style.backgroundColor = 'white';
         optionShow[0].style.color = '#C1143A';
@@ -80,6 +81,7 @@ const changeMatrix = (x) => {
             matrix.size[1]++;
         }
         matrix.mode = 'system';
+        d.getElementById('content-keyboard').innerHTML = keyboard.system
     }
     makeMatrix();
 };
@@ -269,6 +271,8 @@ const keyPress = (key) => {
                 aux++;
             }
         }
+    } else if (key == 'delete') {
+        cel[matrix.celSelect].innerHTML = cel[matrix.celSelect].innerHTML.slice(0, cel[matrix.celSelect].innerHTML.length - 1)
     }
 };
 const resetOperation = () => {
@@ -365,7 +369,7 @@ const showSteps = (A) => {
         }
     }
 }
-
+/*
 let example = [
     ['2','3','4'],
     ['4','1','5'],
@@ -376,7 +380,7 @@ for (let i = 0; i < example.length; i++) {
         example[i][j] = toRational(example[i][j])
     }
 }
-
+*/
 matrix.content = [["", "", ""], ["", "", ""], ["", "", ""]];
 matrix.expanded = ["", "", ""];
 matrix.celSelect = 0;
@@ -388,7 +392,8 @@ keyPress('row')
 matrix.celSelect = 7
 makeMatrix()
 keyPress('up')
-showSteps(example)
+changeMatrix(1)
+//showSteps(example)
 
 
 /*
