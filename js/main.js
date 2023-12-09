@@ -169,7 +169,6 @@ const showMatrix = () => {
 };
 
 const keyPress = (key) => {
-    console.log("KEY: " + key)
     let component = ['btnDown 600ms linear forwards', 'btnUp 600ms linear forwards'];
     var aux;
     if (key == 'row') {
@@ -236,7 +235,6 @@ const keyPress = (key) => {
             for (let j = 0; j < matrix.size[1]; j++) {
                 if (aux == matrix.celSelect) {
                     matrix.content[i][j] += key;
-                    console.log("Key: " + matrix.content[i][j]);
                 }
                 aux++;
             }
@@ -251,26 +249,26 @@ const keyPress = (key) => {
         if (!aux && cel[matrix.celSelect].innerHTML.length != 0) {
             cel[matrix.celSelect].innerHTML += '/';
         }
-    } else if (key == 'done' && isFull() && matrix.operation != null && matrix.mode == 'matrix') {
-        aux = [];
+    } else if (isFull() && (key == 'gaussJordan' || key == 'reverse')) {
+        aux = [[],[],[]];
+        matrix.operation = key;
         for (let i = 0; i < matrix.size[0]; i++) {
             for (let j = 0; j < matrix.size[1]; j++) {
                 aux[i][j] = toRational(matrix.content[i][j]);
             }
         }
         showSteps(aux);
-    } else if (key == 'gaussJordan') {
-        matrix.operation = 'gaussJordan'
-        d.getElementById('reverse-btn').style.backgroundColor = 'White';
-        d.getElementById('reverse-btn').style.color = '#C1143A';
-        d.getElementById('gauss-jordan-btn').style.backgroundColor = '#C1143A';
-        d.getElementById('gauss-jordan-btn').style.color = 'White';
-    } else if (key == 'reverse') {
-        matrix.operation = 'reverse'
-        d.getElementById('reverse-btn').style.backgroundColor = '#C1143A';
-        d.getElementById('reverse-btn').style.color = 'White';
-        d.getElementById('gauss-jordan-btn').style.backgroundColor = 'White';
-        d.getElementById('gauss-jordan-btn').style.color = '#C1143A';
+    } else if (key == '-' && cel[matrix.celSelect].innerHTML.length == 0) {
+        aux = 0;
+        cel[matrix.celSelect].innerHTML += key;
+        for (let i = 0; i < matrix.size[0]; i++) {
+            for (let j = 0; j < matrix.size[1]; j++) {
+                if (aux == matrix.celSelect) {
+                    matrix.content[i][j] += key;
+                }
+                aux++;
+            }
+        }
     }
 };
 const resetOperation = () => {
@@ -304,8 +302,7 @@ const selectCel = (x) => {
 const isFull = () => {
     for (let i = 0; i < matrix.size[0]; i++) {
         for (let j = 0; j < matrix.size[1]; j++) {
-            if (matrix.content[i][j] == "") {
-                console.log('Faltan datos.')
+            if (matrix.content[i][j] == "" || matrix.content[i][j] == '-') {
                 return false;
             }
         }
@@ -327,11 +324,43 @@ const rationalToString = (num, den) => {
     return `${auxNum}<hr style="margin: 0px; padding: 0px; border: 1px solid #C1143A; width: 100%;">${auxDen}`
 }
 const showSteps = (A) => {
-    let stepsContent = d.getElementById('steps');
-    pasos = gaussJordan(A);
-    console.log(pasos);
-    for (let i = 0; i < pasos.length; i++) {
-        stepsContent.innerHTML += dropdownSteps(i+1);
+    if (A == 0) {
+        d.getElementById('main').style.filter = 'blur(0px)'
+        d.querySelector('.tap-block').style.display = 'none'
+        d.getElementById('showResult').style.display = 'none'
+    } else {
+        d.getElementById('main').style.filter = 'blur(2px)'
+        d.querySelector('.tap-block').style.display = 'block'
+        let steps = gaussJordan(A)
+        let aux = []
+        let content = d.querySelector('.drop')
+        let dom = d.getElementById('showResult')
+        dom.style.display = 'grid';
+        content.innerHTML = '';
+        matrix.mode = 'matrix'
+        matrix.operation = 'gaussJordan'
+        if (matrix.mode == 'matrix' && matrix.operation == 'gaussJordan') {
+            for (let i = 0; i < steps.length; i++) {
+                aux = [[],[],[]]
+                for (let x = 0; x < steps[i].resultado.length; x++) {
+                    for (let y = 0; y < steps[i].resultado[0].length; y++) {
+                        aux[x][y] = rationalToString(steps[i].resultado[x][y].num, steps[i].resultado[x][y].den)
+                    }
+                }
+                if (i == steps.length - 1) {
+                    content.innerHTML += stepsComponent('final', aux, steps[i].operaciones, 'Por lo tanto, la matriz escalonada es:')
+                    d.getElementsByClassName('range-aux')[i].innerHTML = `Así, el rango de la matríz es: ${rango(steps[i].resultado)}.`
+                } else if (i == 0) {
+                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matríz: ')
+                } else {
+                    content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Realizamos las operaciones fila correspondientes: ')
+                }
+            }
+            for (let i = 0; i < d.getElementsByClassName('matrix').length; i++) {
+                d.getElementsByClassName('matrix')[i].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
+                d.getElementsByClassName('matrix')[i].style.gridTemplateColumns = `repeat(${matrix.size[1]}, 30px)`
+            }
+        }
     }
 }
 
