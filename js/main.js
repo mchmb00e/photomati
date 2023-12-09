@@ -14,18 +14,10 @@ const matrix = {
     'celSelect': null,
     'matrixAux': [],
     'expanded': [],
-<<<<<<< HEAD
-    'mode': null
-};
-=======
     'mode': null,
     'operation': null
 }
-const btnColRow = d.getElementsByClassName('btn-show-col-row')
-let keyModifySelect
-let sizeAux = []
 
->>>>>>> prueba-visualizacion
 
 const toRational = (s) => {
     if (typeof s === 'string' && s.includes('/')) {
@@ -241,7 +233,6 @@ const isFull = () => {
             }
         }
     }
-<<<<<<< HEAD
     return true;
 };
 
@@ -252,7 +243,6 @@ const showSteps = (stp) => {
 // INIT
 
 /*
-=======
     return true
 }
 
@@ -281,16 +271,14 @@ const showSteps = (A) => {
     }
 }
 
->>>>>>> prueba-visualizacion
 let example = [
-    ['2','3','4'],
-    ['4','1','5'],
-    ['9','4','1']
+    ['1','2','-1'],
+    ['0','-1','1'],
+    ['7','0','3']
 ]
-//INIT
-for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-        example[i][j] = toRational(example[i][j]);
+for (let i = 0; i < example.length; i++) {
+    for (let j = 0; j < example[0].length; j++) {
+        example[i][j] = toRational(example[i][j])
     }
 }
 */
@@ -298,7 +286,6 @@ for (let i = 0; i < 3; i++) {
 matrix.content = [["", "", ""], ["", "", ""], ["", "", ""]];
 matrix.expanded = ["", "", ""];
 matrix.celSelect = 0;
-<<<<<<< HEAD
 sizeAux = [3, 3];
 matrix.size = [3, 3];
 matrix.mode = 'matrix';
@@ -308,15 +295,6 @@ matrix.celSelect = 7;
 makeMatrix();
 keyPress('up');
 console.log(gaussJordan(example));
-=======
-sizeAux = [3, 3]
-matrix.size = [3, 3]
-matrix.mode = 'matrix'
-changeMatrix(0)
-keyPress('row')
-matrix.celSelect = 7
-makeMatrix()
-keyPress('up')
 showSteps(example)
 
 
@@ -353,4 +331,10 @@ d.addEventListener("DOMContentLoaded", () => {
 
 });
 */
->>>>>>> prueba-visualizacion
+
+console.log(example)
+let pasos = gaussJordan(example);
+console.log(pasos[pasos.length - 1].resultado);
+console.log(analizarAmpliada(pasos[pasos.length - 1].resultado));
+
+console.log(invertir(example));
