@@ -1,10 +1,10 @@
+console.log($)
 
-
-$(document).ready(function(){
+$(document).on("ready", function(){
 	
 	var sections = $('span').hide();
 	
-	$("p").click(function(){
+	$("p").on("click", function(){
 		var dv_apa = $(this).parent().next();
 		// "!" = "No"
 		if(!dv_apa.is(":visible")){
