@@ -168,7 +168,6 @@ const showMatrix = () => {
 };
 
 const keyPress = (key) => {
-    console.log("KEY: " + key)
     let component = ['btnDown 600ms linear forwards', 'btnUp 600ms linear forwards'];
     var aux;
     if (key == 'row') {
@@ -235,7 +234,6 @@ const keyPress = (key) => {
             for (let j = 0; j < matrix.size[1]; j++) {
                 if (aux == matrix.celSelect) {
                     matrix.content[i][j] += key;
-                    console.log("Key: " + matrix.content[i][j]);
                 }
                 aux++;
             }
@@ -250,26 +248,26 @@ const keyPress = (key) => {
         if (!aux && cel[matrix.celSelect].innerHTML.length != 0) {
             cel[matrix.celSelect].innerHTML += '/';
         }
-    } else if (key == 'done' && isFull() && matrix.operation != null && matrix.mode == 'matrix') {
-        aux = [];
+    } else if (isFull() && (key == 'gaussJordan' || key == 'reverse')) {
+        aux = [[],[],[]];
+        matrix.operation = key;
         for (let i = 0; i < matrix.size[0]; i++) {
             for (let j = 0; j < matrix.size[1]; j++) {
                 aux[i][j] = toRational(matrix.content[i][j]);
             }
         }
         showSteps(aux);
-    } else if (key == 'gaussJordan') {
-        matrix.operation = 'gaussJordan'
-        d.getElementById('reverse-btn').style.backgroundColor = 'White';
-        d.getElementById('reverse-btn').style.color = '#C1143A';
-        d.getElementById('gauss-jordan-btn').style.backgroundColor = '#C1143A';
-        d.getElementById('gauss-jordan-btn').style.color = 'White';
-    } else if (key == 'reverse') {
-        matrix.operation = 'reverse'
-        d.getElementById('reverse-btn').style.backgroundColor = '#C1143A';
-        d.getElementById('reverse-btn').style.color = 'White';
-        d.getElementById('gauss-jordan-btn').style.backgroundColor = 'White';
-        d.getElementById('gauss-jordan-btn').style.color = '#C1143A';
+    } else if (key == '-' && cel[matrix.celSelect].innerHTML.length == 0) {
+        aux = 0;
+        cel[matrix.celSelect].innerHTML += key;
+        for (let i = 0; i < matrix.size[0]; i++) {
+            for (let j = 0; j < matrix.size[1]; j++) {
+                if (aux == matrix.celSelect) {
+                    matrix.content[i][j] += key;
+                }
+                aux++;
+            }
+        }
     }
 };
 const resetOperation = () => {
@@ -303,8 +301,7 @@ const selectCel = (x) => {
 const isFull = () => {
     for (let i = 0; i < matrix.size[0]; i++) {
         for (let j = 0; j < matrix.size[1]; j++) {
-            if (matrix.content[i][j] == "") {
-                console.log('Faltan datos.')
+            if (matrix.content[i][j] == "" || matrix.content[i][j] == '-') {
                 return false;
             }
         }
@@ -335,14 +332,12 @@ const showSteps = (A) => {
         d.querySelector('.tap-block').style.display = 'block'
         let steps = gaussJordan(A)
         let aux = []
-        console.log(steps)
         let content = d.querySelector('.drop')
         let dom = d.getElementById('showResult')
         dom.style.display = 'grid';
         content.innerHTML = '';
         matrix.mode = 'matrix'
         matrix.operation = 'gaussJordan'
-        console.log(steps.length)
         if (matrix.mode == 'matrix' && matrix.operation == 'gaussJordan') {
             for (let i = 0; i < steps.length; i++) {
                 aux = [[],[],[]]
