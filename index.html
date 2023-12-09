@@ -1,101 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhotoMati</title>
-    <link rel="shortcut icon" href="rsc/favicon.svg" type="image/x-icon">
-    <link rel="stylesheet" href="css/view.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoMati</title>
+  <link rel="shortcut icon" href="rsc/favicon.svg" type="image/x-icon">
+  <link rel="stylesheet" href="css/view.css">
 </head>
+
 <body>
-    <div id="showResult">
-      <div id="steps"></div>
-      <div id="steps-controller">
-        <div>Cerrar</div>
+  <div id="showResult">
+    <div id="steps">
+      <section class="drop">
+        
+      </section>
+    </div>
+    <div id="steps-controller">
+      <div onclick="showSteps('next')">Siguiente</div>
+      <div onclick="showSteps(0)">Cerrar</div>
+    </div>
+  </div>
+  <div class="tap-block"></div>
+  <section class="popup-col-row">
+    <h2>Modificar <span id="select-h2-content">columna</span></h2>
+    <div class="show-col-row">
+      <div onclick="keyPress('row')" class="btn-show-col-row">3</div>
+      <div onclick="keyPress('col')" class="btn-show-col-row">3</div>
+    </div>
+    <div class="arrow-col-row">
+      <div onclick="keyPress('left-change')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
+          class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+          <path
+            d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+        </svg></div>
+      <div onclick="keyPress('right-change')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+          fill="white" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+          <path
+            d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+        </svg></div>
+    </div>
+    <div class="btn-col-row">
+      <div onclick="changeSize('1')">Cambiar tamaño</div>
+      <div onclick="changeSize('0')">Cerrar</div>
+    </div>
+  </section>
+  <main id="main">
+    <div class="option-1">
+      <div>
+        <div class="option-1-select" onclick="changeMatrix('0')">Matriz</div>
+        <div class="option-1-select" onclick="changeMatrix('1')">Sistema</div>
+      </div>
+      <div onclick="changeSize('2')">
+        Tamaño
       </div>
     </div>
-    <div class="tap-block"></div>
-    <section class="popup-col-row">
-      <h2>Modificar <span id="select-h2-content">columna</span></h2>
-      <div class="show-col-row">
-        <div onclick="keyPress('row')" class="btn-show-col-row">3</div>
-        <div onclick="keyPress('col')" class="btn-show-col-row">3</div>
-      </div>
-      <div class="arrow-col-row">
-        <div onclick="keyPress('left-change')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-          <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-        </svg></div>
-        <div onclick="keyPress('right-change')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-          <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-        </svg></div>
-      </div>
-      <div class="btn-col-row">
-        <div onclick="changeSize('1')">Cambiar tamaño</div>
-        <div onclick="changeSize('0')">Cerrar</div>
-      </div>
-    </section>
-    <main id="main">
-        <div class="option-1">
-          <div>
-            <div class="option-1-select" onclick="changeMatrix('0')"><p>Matriz</p></div>
-            <div class="option-1-select" onclick="changeMatrix('1')"><p>Sistema</p></div>
-          </div>
-          <div onclick="changeSize('2')">
-            Tamaño
+    <div class="content-aux-fixed">
+      <div class="content">
+        <div class="sys">
+        </div>
+        <div class="content-aux">
+          <div id="matrix-content">
           </div>
         </div>
-        <div class="content">
-          <div class="content-aux">
-            <div id="matrix-content">
-            </div>
-            <div id="expanded">
-            </div>
-          </div>
-        </div>
-        <div class="center">
-        <div class="keyboard">
-            <div class="key" onclick="keyPress('1')" style="grid-row: 5 / 6; grid-column: 1 / 2;">1</div>
-            <div class="key" onclick="keyPress('2')" style="grid-row: 5 / 6; grid-column: 2 / 3;">2</div>
-            <div class="key" onclick="keyPress('3')" style="grid-row: 5 / 6; grid-column: 3 / 4;">3</div>
-            <div class="key" onclick="keyPress('4')" style="grid-row: 4 / 5; grid-column: 1 / 2;">4</div>
-            <div class="key" onclick="keyPress('5')" style="grid-row: 4 / 5; grid-column: 2 / 3;">5</div>
-            <div class="key" onclick="keyPress('6')" style="grid-row: 4 / 5; grid-column: 3 / 4;">6</div>
-            <div class="key" onclick="keyPress('7')" style="grid-row: 3 / 4; grid-column: 1 / 2;">7</div>
-            <div class="key" onclick="keyPress('8')" style="grid-row: 3 / 4; grid-column: 2 / 3;">8</div>
-            <div class="key" onclick="keyPress('9')" style="grid-row: 3 / 4; grid-column: 3 / 4;">9</div>
-            <div class="key" onclick="keyPress('0')" style="grid-row: 6 / 7; grid-column: 1 / 3;">0</div>
-            <div class="key red-btn" onclick="keyPress('left')" style="grid-row: 2 / 3; grid-column: 1 / 3;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-              </svg></div>
-            <div class="key red-btn" onclick="keyPress('right')" style="grid-row: 2 / 3; grid-column: 4 / 6;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-              </svg></div>
-            <div class="key red-btn" onclick="keyPress('up')" style="grid-row: 1 / 2; grid-column: 3 / 4;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
-                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-              </svg></div>
-            <div class="key red-btn" onclick="keyPress('down')" style="grid-row: 2 / 3; grid-column: 3 / 4;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-              </svg></div>
-            <div class="key" onclick="keyPress('reset')" style="grid-row: 1 / 2; grid-column: 4 / 6;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
-                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
-              </svg> Reiniciar celda</div>
-            <div class="key" onclick="keyPress('done')" style="grid-row: 1 / 2; grid-column: 1 / 3;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-              </svg> Resultado</div>
-            <div class="key" onclick="keyPress('/')" style="grid-row: 6 / 7; grid-column: 3 / 4;">/</div>
-            <div class="key" onclick="keyPress('range')" style="grid-row: 3 / 5; grid-column: 4 / 6;">Rango</div>
-            <div class="key" onclick="keyPress('stagger')" style="grid-row: 5 / 7; grid-column: 4 / 6;">Escalonar</div>
-        </div>
+      </div>
     </div>
-    </main>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <script src="js/dropdown.js"></script>
+    <div class="center">
+      <div class="keyboard">
+        <div class="key" onclick="keyPress('1')" style="grid-row: 5 / 6; grid-column: 1 / 2;">1</div>
+        <div class="key" onclick="keyPress('2')" style="grid-row: 5 / 6; grid-column: 2 / 3;">2</div>
+        <div class="key" onclick="keyPress('3')" style="grid-row: 5 / 6; grid-column: 3 / 4;">3</div>
+        <div class="key" onclick="keyPress('4')" style="grid-row: 4 / 5; grid-column: 1 / 2;">4</div>
+        <div class="key" onclick="keyPress('5')" style="grid-row: 4 / 5; grid-column: 2 / 3;">5</div>
+        <div class="key" onclick="keyPress('6')" style="grid-row: 4 / 5; grid-column: 3 / 4;">6</div>
+        <div class="key" onclick="keyPress('7')" style="grid-row: 3 / 4; grid-column: 1 / 2;">7</div>
+        <div class="key" onclick="keyPress('8')" style="grid-row: 3 / 4; grid-column: 2 / 3;">8</div>
+        <div class="key" onclick="keyPress('9')" style="grid-row: 3 / 4; grid-column: 3 / 4;">9</div>
+        <div class="key" onclick="keyPress('0')" style="grid-row: 6 / 7; grid-column: 1 / 3;">0</div>
+        <div class="key red-btn" onclick="keyPress('left')" style="grid-row: 2 / 3; grid-column: 1 / 3;"><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-left-fill"
+            viewBox="0 0 16 16">
+            <path
+              d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+          </svg></div>
+        <div class="key red-btn" onclick="keyPress('right')" style="grid-row: 2 / 3; grid-column: 4 / 6;"><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-right-fill"
+            viewBox="0 0 16 16">
+            <path
+              d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+          </svg></div>
+        <div class="key red-btn" onclick="keyPress('up')" style="grid-row: 1 / 2; grid-column: 3 / 4;"><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-up-fill"
+            viewBox="0 0 16 16">
+            <path
+              d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+          </svg></div>
+        <div class="key red-btn" onclick="keyPress('down')" style="grid-row: 2 / 3; grid-column: 3 / 4;"><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-down-fill"
+            viewBox="0 0 16 16">
+            <path
+              d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+          </svg></div>
+        <div class="key" onclick="keyPress('reset')" style="grid-row: 1 / 2; grid-column: 4 / 6;"><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" />
+            <path
+              d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
+          </svg>Vaciar celda</div>
+        <div class="key" onclick="keyPress('done')" style="grid-row: 1 / 2; grid-column: 1 / 3;"><svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check"
+            viewBox="0 0 16 16">
+            <path
+              d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+          </svg> Resultado</div>
+        <div class="key" onclick="keyPress('/')" style="grid-row: 6 / 7; grid-column: 3 / 4;">/</div>
+        <div class="key" id="gauss-jordan-btn" onclick="keyPress('gaussJordan')"
+          style="grid-row: 3 / 5; grid-column: 4 / 6;">Escalonar y rango
+        </div>
+        <div class="key" id="reverse-btn" onclick="keyPress('reverse')" style="grid-row: 5 / 7; grid-column: 4 / 6;">
+          Inversa</div>
+      </div>
+    </div>
+  </main>
 
-    <script src="js/gauss-jordan.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="js/main.js"></script>
+  <script src="js/dropdown.js"></script>
+
+  <script src="js/gauss-jordan.js"></script>
+
+  <script src="js/main.js"></script>
 </body>
+
 </html>
