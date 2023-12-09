@@ -1,19 +1,14 @@
-console.log($)
+const activarDropdown = () => {
+	$(".dropdown-content").hide();
 
-$(document).on("ready", function(){
-	
-	var sections = $('span').hide();
-	
-	$("p").on("click", function(){
-		var dv_apa = $(this).parent().next();
+	$(".drop-div").on("click", function(){
+		var content = $(this).next();
 		// "!" = "No"
-		if(!dv_apa.is(":visible")){
-			dv_apa.slideDown();
-			$("span").not(dv_apa).slideUp();
+		if(!content.is(":visible")){
+			content.slideDown();
+			$(".dropdown-content").not(content).slideUp();
 		} else {
-			dv_apa.slideUp();
+			content.slideUp();
 		}
 	});
-});
-
-
+}

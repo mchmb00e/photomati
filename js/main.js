@@ -125,7 +125,7 @@ const varSystemComponent = (k) => {
         </span>
 */
 const stepsComponent = (c, A, P, msg, r) => {
-    let component = `<div class="drop-div"><p id="1">Paso ${c}</p></div><span><h2>${msg}</h2><div class="matrix">`;
+    let component = `<div class="drop-div"><p id="1">Paso ${c}</p></div><span class="dropdown-content"><h2>${msg}</h2><div class="matrix">`;
     for (let i = 0; i < A.length; i++) {
         for (let j = 0; j < A[0].length; j++) {
             component += `<div class="celda-step">${A[i][j]}</div>`;
@@ -360,6 +360,8 @@ const showSteps = (A) => {
                 d.getElementsByClassName('matrix')[i].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
                 d.getElementsByClassName('matrix')[i].style.gridTemplateColumns = `repeat(${matrix.size[1]}, 30px)`
             }
+            activarDropdown();
+
         }
     }
 }
