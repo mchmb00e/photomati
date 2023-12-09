@@ -107,10 +107,7 @@ const encontrarValorEnColumna = (matriz, filaDesde, columna) => {
 
 // Función que convierte una matriz a su versión escalonada reducida por filas
 const gaussJordan = (matriz) => {
-<<<<<<< HEAD
-=======
   // Obteniendo orden de la matriz
->>>>>>> 84f75b07d0f4343c96c4c9e8e3441d9a02fed071
   let numeroFilas = matriz.length;
   let numeroColumnas = matriz[0].length;
   // Copiando matriz
