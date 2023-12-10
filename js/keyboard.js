@@ -43,7 +43,7 @@ const keyboard = {
       </svg>Vaciar celda</div>
     <div class="key" onclick="keyPress('/')" style="grid-row: 6 / 7; grid-column: 3 / 4;">/</div>
     <div class="key" onclick="keyPress('delete')" style="grid-row: 3 / 4; grid-column: 4 / 6;">Borrar</div>
-    <div class="key" onclick="keyPress('-')" style="grid-row: 4 / 5; grid-column: 4 / 6;">Negativo</div>
+    <div class="key" onclick="keyPress('-')" style="grid-row: 4 / 5; grid-column: 4 / 6;"><span style="transform: scale(2); border-radius: 10px;letter-spacing: -10px;line-height: 1.5px;">----</span></div>
     <div class="key" id="gauss-jordan-btn" onclick="keyPress('gaussJordan')"
       style="grid-row: 1 / 2; grid-column: 1 / 3;">Escalonar y rango
     </div>
@@ -94,11 +94,11 @@ const keyboard = {
       </svg>Vaciar celda</div>
     <div class="key" onclick="keyPress('/')" style="grid-row: 6 / 7; grid-column: 3 / 4;">/</div>
     <div class="key" onclick="keyPress('delete')" style="grid-row: 3 / 4; grid-column: 4 / 6;">Borrar</div>
-    <div class="key" onclick="keyPress('-')" style="grid-row: 4 / 5; grid-column: 4 / 6;">Negativo</div>
+    <div class="key" onclick="keyPress('-')" style="grid-row: 4 / 5; grid-column: 4 / 6;"><span style="transform: scale(2); border-radius: 10px;letter-spacing: -10px;line-height: 1.5px;">----</span></div>
     <div class="key" onclick="keyPress('system-answer')"
       style="grid-row: 1 / 2; grid-column: 1 / 3;">Resultado
     </div>
-    <div class="key" id="reverse-btn" onclick="keyPress('reverse')" style="grid-row: 1 / 2; grid-column: 4 / 6;">
+    <div class="key" id="reverse-btn"" style="grid-row: 1 / 2; grid-column: 4 / 6; filter: grayscale(1);opacity: 50%;">
       Inversa</div>
   </div>`
 }
