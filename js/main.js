@@ -398,19 +398,19 @@ const showSteps = (A) => {
                             infoInvertir.inversa[x][y] = rationalToString(infoInvertir.inversa[x][y].num, infoInvertir.inversa[x][y].den)
                         }
                     }
-                    content.innerHTML += stepsComponent(i == 0 ? 'inicial' : 0, aux, steps[i].operaciones, '')
+                    content.innerHTML += stepsComponent(i == 0 ? 'inicial' : i, aux, steps[i].operaciones, '')
                     if (infoInvertir.invertible) {
                         content.innerHTML += stepsComponent('final', infoInvertir.inversa, [], '')
-                        d.getElementsByClassName('range-aux')[i + 1].innerHTML = `Matriz inversa`
+                        d.getElementsByClassName('range-aux')[i + 1].innerHTML = `Resultado matriz inversa:`
                     }
-                    d.getElementsByClassName('range-aux')[i].innerHTML = `La matriz es ${infoInvertir.invertible ? "invertible" : "no invertible"}.`
+                    d.getElementsByClassName('range-aux')[i].innerHTML = `Realizamos las siguientes operaciones fila:`
                 } else if (i == 0) {
                     content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Reducimos la siguiente matriz por Gauss-Jordan: ')
                 } else {
                     content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, 'Realizamos las siguientes operaciones fila: ')
                 }
             }
-            if (!infoInvertir.invertible && infoInvertir.pasos.length == 0) {
+            if (!infoInvertir.invertible && A.length != A[0].length) {
                 for (let x = 0; x < A.length; x++) {
                     for (let y = 0; y < A[0].length; y++) {
                         A[x][y] = rationalToString(A[x][y].num, A[x][y].den)
@@ -423,7 +423,9 @@ const showSteps = (A) => {
                 d.getElementsByClassName('matrix')[i].style.gridTemplateColumns = `repeat(${matrix.size[1]*2}, 30px)`
                 d.getElementsByClassName('matrix')[i].style.order = `3`
             }
-            d.getElementsByClassName('matrix')[d.getElementsByClassName('matrix').length - 1].style.gridTemplateColumns = `repeat(${matrix.size[1]}, 30px)`
+            if (infoInvertir.invertible || A.length != A[0].length) {
+                d.getElementsByClassName('matrix')[d.getElementsByClassName('matrix').length - 1].style.gridTemplateColumns = `repeat(${A[0].length}, 30px)`
+            }
             for (let i = 0; i < d.getElementsByClassName('dropdown-content').length; i++) {
                 d.getElementsByClassName('dropdown-content')[i].style.display = 'flex'
                 d.getElementsByClassName('dropdown-content')[i].style.flexDirection = 'column'
@@ -439,8 +441,8 @@ const showSteps = (A) => {
 
 let example = [
     ['1','3', '5'],
-    ['0','0', '0'],
-    ['0','0', '0']
+    ['0','2', '0'],
+    ['0','0', '1']
 ]
 for (let i = 0; i < example.length; i++) {
     for (let j = 0; j < example[0].length; j++) {
