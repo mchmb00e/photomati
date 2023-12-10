@@ -272,16 +272,21 @@ const keyPress = (key) => {
             }
         }
         showSteps(aux);
-    } else if (key == '-' && cel[matrix.celSelect].innerHTML.length == 0) {
+    } else if (key == '-') {
         aux = 0;
-            cel[matrix.celSelect].innerHTML += key;
-            for (let i = 0; i < matrix.size[0]; i++) {
-                for (let j = 0; j < matrix.size[1]; j++) {
-                    if (aux == matrix.celSelect) {
-                        matrix.content[i][j] += key;
-                    }
-                    aux++;
+        if (cel[matrix.celSelect].innerHTML.includes('-')) {
+            cel[matrix.celSelect].innerHTML = cel[matrix.celSelect].innerHTML.slice(1, cel[matrix.celSelect].innerHTML.length);
+        } else {
+            cel[matrix.celSelect].innerHTML = '-' + cel[matrix.celSelect].innerHTML;
+        }
+
+        for (let i = 0; i < matrix.size[0]; i++) {
+            for (let j = 0; j < matrix.size[1]; j++) {
+                if (aux == matrix.celSelect) {
+                    matrix.content[i][j] += key;
                 }
+                aux++;
+            }
         }
     } else if (key == 'delete') {
         aux = 0;
