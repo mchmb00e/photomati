@@ -31,6 +31,8 @@ const toRational = (s) => {
 };
 
 const changeSize = (x) => {
+    btnColRow[0].innerHTML = matrix.size[0]
+    btnColRow[1].innerHTML = matrix.size[1]
     if (x == '2') {
         sizeAux = matrix.size;
         d.getElementsByClassName('popup-col-row')[0].style.display = 'flex';
@@ -45,6 +47,7 @@ const changeSize = (x) => {
         matrix.size[0] = sizeAux[0];
         matrix.size[1] = sizeAux[1];
         makeMatrix();
+
     }
 };
 
@@ -127,7 +130,7 @@ const varSystemComponent = (k) => {
         </span>
 */
 const stepsComponent = (c, A, P, msg, r) => {
-        let component = `<div class="drop-div"><p id="1">Paso ${c}</p></div><span class="dropdown-content"><h2>${msg}</h2><div style="position: relative; right: 10px;" class="matrix">`;
+        let component = `<div class="drop-div"><p id="1">Paso ${c}</p></div><span class="dropdown-content"><h2 class="steps-title">${msg}</h2><div style="position: relative; right: 10pxs;" class="matrix">`;
         for (let i = 0; i < A.length; i++) {
             for (let j = 0; j < A[0].length; j++) {
                 if (matrix.operation == 'reverse' && j >= matrix.size[1]) {
@@ -256,7 +259,9 @@ const keyPress = (key) => {
             cel[matrix.celSelect].innerHTML += '/';
         }
     } else if (isFull() && (key == 'gaussJordan' || key == 'reverse')) {
-        aux = [[],[],[]];
+        for (let q = 0; q < matrix.size[0]; q++) {
+            aux[q] = []
+        }
         matrix.operation = key;
         for (let i = 0; i < matrix.size[0]; i++) {
             for (let j = 0; j < matrix.size[1]; j++) {
@@ -286,8 +291,18 @@ const keyPress = (key) => {
                 aux++;
             }
         }
-    } else if (key == 'system-answer') {
-
+    } else if (key == 'system-answer' && matrix.size[0] == matrix.size[1]-1 && matrix.mode == 'system' && isFull()) {
+        aux = []
+        for (let q = 0; q < matrix.size[0]; q++) {
+            aux[q] = []
+        }
+        matrix.operation = key;
+        for (let i = 0; i < matrix.size[0]; i++) {
+            for (let j = 0; j < matrix.size[1]; j++) {
+                aux[i][j] = toRational(matrix.content[i][j]);
+            }
+        }
+        showSteps(aux);
     }
 };
 const resetOperation = () => {
@@ -366,12 +381,12 @@ const showSteps = (A) => {
                     }
                 }
                 if (i == steps.length - 1) {
-                    content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, 'Por lo tanto, la matriz escalonada es:')
-                    d.getElementsByClassName('range-aux')[i].innerHTML = `El rango de la matríz es: ${rango(steps[i].resultado)}.`
+                    content.innerHTML += stepsComponent('final', aux, steps[i].operaciones, 'Por lo tanto, la matriz escalonada es:')
+                    d.getElementsByClassName('range-aux')[i].innerHTML = `Así, el rango de la matríz es: ${rango(steps[i].resultado)}.`
                 } else if (i == 0) {
-                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Reducimos la siguiente matriz por Gauss-Jordan: ')
+                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matríz: ')
                 } else {
-                    content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, 'Realizamos las siguientes operaciones fila: ')
+                    content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Realizamos las operaciones fila correspondientes: ')
                 }
             }
             for (let i = 0; i < d.getElementsByClassName('matrix').length; i++) {
@@ -405,7 +420,7 @@ const showSteps = (A) => {
                     }
                     d.getElementsByClassName('range-aux')[i].innerHTML = `Realizamos las siguientes operaciones fila:`
                 } else if (i == 0) {
-                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Reducimos la siguiente matriz por Gauss-Jordan: ')
+                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matríz: ')
                 } else {
                     content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, 'Realizamos las siguientes operaciones fila: ')
                 }
@@ -434,21 +449,72 @@ const showSteps = (A) => {
 
             }
             activarDropdown();
+        } else if (matrix.mode == 'system') {
+            steps = gaussJordan(A)
+            solucion = analizarAmpliada(steps[steps.length-1].resultado)
+            for (let i = 0; i < steps.length; i++) {
+                for (let q = 0; q < A.length; q++) {
+                    aux[q] = []
+                }
+                for (let x = 0; x < steps[i].resultado.length; x++) {
+                    for (let y = 0; y < steps[i].resultado[0].length; y++) {
+                        aux[x][y] = rationalToString(steps[i].resultado[x][y].num, steps[i].resultado[x][y].den)
+                    }
+                }
+                if (i == 0) {
+                    content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Mediante Gauss-Jordan reducieremos la matríz:')
+                } else {
+                    content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Realizamos las operaciones fila correspondientes:')
+                }
+            }
+            for (let i = 0; i < d.getElementsByClassName('matrix').length; i++) {
+                d.getElementsByClassName('matrix')[i].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
+                d.getElementsByClassName('matrix')[i].style.gridTemplateColumns = `repeat(${matrix.size[1]}, 30px)`
+                d.getElementsByClassName('steps-title')[i].style.order = '1'
+                d.getElementsByClassName('matrix')[i].style.order = '2'
+            }
+            if (solucion.tipo == 'Solución única') {
+                content.innerHTML += stepsComponent('final', aux, solucion.soluciones, 'El sistema tiene solución única, ya que <i>p(A)</i> es igual al <i>p(A|b)</i> y al número de variables:')
+                d.getElementsByClassName('steps-title')[steps.length].style.order = '1'
+                d.getElementsByClassName('matrix')[steps.length].style.order = '2'
+                d.getElementsByClassName('matrix')[steps.length].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
+                d.getElementsByClassName('matrix')[steps.length].style.gridTemplateColumns = `repeat(${matrix.size[1]}, 30px)`
+            } else if (solucion.tipo == 'Infinitas soluciones') {
+                content.innerHTML += stepsComponent('final', aux, solucion.soluciones, 'El sistema tiene soluciones infinitas, ya que <i>p(A)</i> es igual a <i>p(A|b)</i> y menor al número de variables:')
+                d.getElementsByClassName('steps-title')[steps.length].style.order = '1'
+                d.getElementsByClassName('matrix')[steps.length].style.order = '2'
+                d.getElementsByClassName('matrix')[steps.length].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
+                d.getElementsByClassName('matrix')[steps.length].style.gridTemplateColumns = `repeat(${matrix.size[1]}, 30px)`
+            } else if (solucion.tipo == 'No tiene solución.') {
+                content.innerHTML += stepsComponent('final', aux, [], 'El sistema no tiene solución, ya que <i>p(A)</i> es distinto de <i>p(A|b)</i>:')
+                d.getElementsByClassName('steps-title')[steps.length].style.order = '1'
+                d.getElementsByClassName('matrix')[steps.length].style.order = '2'
+                d.getElementsByClassName('matrix')[steps.length].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
+                d.getElementsByClassName('matrix')[steps.length].style.gridTemplateColumns = `repeat(${matrix.size[1]}, 30px)`
+            }
+            console.log(solucion)
+            activarDropdown()
         }
     }
 }
 
 
+/*let example = [
+    ['2','3','4','3'],
+    ['4','1','5','2'],
+    ['9','4','1','4']
+]
 let example = [
-    ['1','3', '5'],
-    ['0','2', '0'],
-    ['0','0', '1']
+    ['1','2','3','4','5'],
+    ['2','4','6','8','2'],
+    ['3','1','5','3','2'],
+    ['3','6','9','12','1']
 ]
 for (let i = 0; i < example.length; i++) {
     for (let j = 0; j < example[0].length; j++) {
         example[i][j] = toRational(example[i][j])
     }
-}
+}*/
 
 
 matrix.content = [["", "", ""], ["", "", ""], ["", "", ""]];
@@ -459,11 +525,9 @@ matrix.size = [3, 3]
 matrix.mode = 'matrix'
 changeMatrix(0)
 keyPress('row')
-matrix.celSelect = 7
+matrix.celSelect = 0
 makeMatrix()
 keyPress('up')
-matrix.operation = 'reverse'
-showSteps(example)
 
 
 /*
