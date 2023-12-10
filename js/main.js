@@ -29,11 +29,27 @@ const toRational = (s) => {
         return { num, den };
     }
 };
-
+const btnSize = (op, t) => {
+    if (op == '+' && t == 'row' && sizeAux[0] < 4) {
+        sizeAux[0]++
+        d.getElementsByClassName('popup-structure-content')[0].innerHTML = sizeAux[0]
+    } else if (op == '-' && t == 'row' && sizeAux[0] > 1) {
+        sizeAux[0]--
+        d.getElementsByClassName('popup-structure-content')[0].innerHTML = sizeAux[0]
+    } else if (op == '+' && t == 'col' && sizeAux[1] < 4) {
+        sizeAux[1]++
+        d.getElementsByClassName('popup-structure-content')[1].innerHTML = sizeAux[1]
+    } else if (op == '-' && t == 'col' && sizeAux[1] > 1) {
+        sizeAux[1]--
+        d.getElementsByClassName('popup-structure-content')[1].innerHTML = sizeAux[1]
+    }
+    console.log(sizeAux)
+}
 const changeSize = (x) => {
-    btnColRow[0].innerHTML = matrix.size[0]
-    btnColRow[1].innerHTML = matrix.size[1]
+    let aux = false
     if (x == '2') {
+        d.getElementsByClassName('popup-structure-content')[0].innerHTML = matrix.size[0]
+        d.getElementsByClassName('popup-structure-content')[1].innerHTML = matrix.size[1]
         sizeAux = matrix.size;
         d.getElementsByClassName('popup-col-row')[0].style.display = 'flex';
         d.getElementsByClassName('tap-block')[0].style.display = 'block';
@@ -45,11 +61,20 @@ const changeSize = (x) => {
         d.getElementsByClassName('popup-col-row')[0].style.display = 'none';
         d.getElementsByClassName('tap-block')[0].style.display = 'none';
         matrix.size[0] = sizeAux[0];
-        matrix.size[1] = sizeAux[1];
-        if (matrix.mode == 'system') {
-            matrix.size[1] = sizeAux[1]-1;
+        if (matrix.mode == 'matrix') {
+            matrix.size[1] = sizeAux[1];
+        } else if (matrix.mode == 'system') {
+            matrix.size[1] = sizeAux[1] + 1;
         }
+        d.getElementById('order-content').innerHTML = matrix.size[0] + 'x' + matrix.size[1]
+        if (matrix.mode == 'system') {
+            aux = true
+        }
+        changeMatrix(0)
         makeMatrix();
+        if (aux) {
+            changeMatrix(1)
+        }
     }
 };
 
@@ -182,23 +207,7 @@ const showMatrix = () => {
 const keyPress = (key) => {
     let component = ['btnDown 600ms linear forwards', 'btnUp 600ms linear forwards'];
     var aux;
-    if (key == 'row') {
-        d.getElementById('select-h2-content').innerHTML = 'fila';
-        btnColRow[0].style.animation = component[1];
-        btnColRow[1].style.animation = component[0];
-        keyModifySelect = 0;
-    } else if (key == 'col') {
-        d.getElementById('select-h2-content').innerHTML = 'columna';
-        btnColRow[0].style.animation = component[0];
-        btnColRow[1].style.animation = component[1];
-        keyModifySelect = 1;
-    } else if (key == 'left-change' && btnColRow[keyModifySelect].innerHTML > '1') {
-        sizeAux[keyModifySelect] -= 1;
-        btnColRow[keyModifySelect].innerHTML = sizeAux[keyModifySelect];
-    } else if (key == 'right-change' && btnColRow[keyModifySelect].innerHTML < '5') {
-        sizeAux[keyModifySelect] += 1;
-        btnColRow[keyModifySelect].innerHTML = sizeAux[keyModifySelect];
-    } else if (key == 'right' && matrix.celSelect % matrix.size[1] !== matrix.size[1] - 1) {
+    if (key == 'right' && matrix.celSelect % matrix.size[1] !== matrix.size[1] - 1) {
         if (matrix.celSelect == matrix.size[0] * matrix.size[1] - 1) {
             selectCel(0);
         } else {
@@ -549,6 +558,8 @@ keyPress('row')
 matrix.celSelect = 0
 makeMatrix()
 keyPress('up')
+changeSize(1)
+changeSize(2)
 
 
 /*
