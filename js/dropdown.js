@@ -1,5 +1,6 @@
 const activarDropdown = () => {
 	$(".dropdown-content").hide();
+	$(".dropdown-content").first().slideDown();
 
 	$(".drop-div").on("click", function() {
 
@@ -19,7 +20,7 @@ const activarDropdown = () => {
 				
 				$("#steps").animate({
 					scrollTop: $(this).offset().top - $("#showResult").offset().top + $("#steps").scrollTop()
-				}, 800);
+				}, 500);
 				$(this).slideUp();
 				$(this).next().next().slideDown();
 				
