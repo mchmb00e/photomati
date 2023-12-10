@@ -259,6 +259,7 @@ const keyPress = (key) => {
             cel[matrix.celSelect].innerHTML += '/';
         }
     } else if (isFull() && (key == 'gaussJordan' || key == 'reverse')) {
+        aux = []
         for (let q = 0; q < matrix.size[0]; q++) {
             aux[q] = []
         }
@@ -392,6 +393,8 @@ const showSteps = (A) => {
             for (let i = 0; i < d.getElementsByClassName('matrix').length; i++) {
                 d.getElementsByClassName('matrix')[i].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
                 d.getElementsByClassName('matrix')[i].style.gridTemplateColumns = `repeat(${matrix.size[1]}, 30px)`
+                d.getElementsByClassName('steps-title')[i].style.order = '1'
+                d.getElementsByClassName('matrix')[i].style.order = '2'
             }
             activarDropdown();
 
@@ -446,7 +449,6 @@ const showSteps = (A) => {
                 d.getElementsByClassName('dropdown-content')[i].style.flexDirection = 'column'
                 d.getElementsByClassName('dropdown-content')[i].style.alignItems = 'center'
                 d.getElementsByClassName('dropdown-content')[i].style.gap = '0px'
-
             }
             activarDropdown();
         } else if (matrix.mode == 'system') {
