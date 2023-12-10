@@ -154,6 +154,7 @@ header div:last-child svg {
 }
 .cel-content {
     border: 1px solid var(--primary);
+    border-radius: 5px;
     font-family: 'Inter';
     font-size: 10px;
     text-align: center;
@@ -232,8 +233,8 @@ header div:last-child svg {
     display: none;
     z-index: 3;
     position: fixed;
-    top: 25%;
-    bottom: 25%;
+    top: 15%;
+    bottom: 15%;
     left: 20%;
     right: 20%;
     background-color: white;
