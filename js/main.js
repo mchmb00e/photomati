@@ -73,6 +73,7 @@ const changeMatrix = (x) => {
             matrix.size[1]--;
         }
         matrix.mode = 'matrix';
+        d.getElementById('content-keyboard').innerHTML = keyboard.matrix
     } else {
         optionShow[0].style.backgroundColor = 'white';
         optionShow[0].style.color = '#C1143A';
@@ -80,6 +81,7 @@ const changeMatrix = (x) => {
             matrix.size[1]++;
         }
         matrix.mode = 'system';
+        d.getElementById('content-keyboard').innerHTML = keyboard.system
     }
     makeMatrix();
 };
@@ -125,19 +127,23 @@ const varSystemComponent = (k) => {
         </span>
 */
 const stepsComponent = (c, A, P, msg, r) => {
-    let component = `<div class="drop-div"><p id="1">Paso ${c}</p></div><span class="dropdown-content"><h2>${msg}</h2><div class="matrix">`;
-    for (let i = 0; i < A.length; i++) {
-        for (let j = 0; j < A[0].length; j++) {
-            component += `<div class="celda-step">${A[i][j]}</div>`;
+        let component = `<div class="drop-div"><p id="1">Paso ${c}</p></div><span class="dropdown-content"><h2>${msg}</h2><div style="position: relative; right: 10px;" class="matrix">`;
+        for (let i = 0; i < A.length; i++) {
+            for (let j = 0; j < A[0].length; j++) {
+                if (matrix.operation == 'reverse' && j >= matrix.size[1]) {
+                    component += `<div style="position: relative; left: 10px;" class="celda-step">${A[i][j]}</div>`;
+                } else {
+                    component += `<div class="celda-step">${A[i][j]}</div>`;
+                }
+            }
         }
-    }
-    component += `</div><div class="steps-string"><ol type="1">`;
-    for (let i = 0; i < P.length; i++) {
-        component += `<li>${P[i]}</li>`;
-    }
-    component += `</ol></div><div class="range-aux"></div></span>`;
-
-    return component;
+        component += `</div><div class="steps-string" style="order: 2;">`;
+        for (let i = 0; i < P.length; i++) {
+            component += `<h6 style="font-size: 12px; margin: 0px;">${P[i]}</h6>`;
+        }
+        component += `</div><div class="range-aux"></div></span>`;
+        
+        return component;
 }
 
 const showMatrix = () => {
@@ -269,6 +275,19 @@ const keyPress = (key) => {
                 aux++;
             }
         }
+    } else if (key == 'delete') {
+        aux = 0;
+        cel[matrix.celSelect].innerHTML = cel[matrix.celSelect].innerHTML.slice(0, cel[matrix.celSelect].innerHTML.length - 1)
+        for (let i = 0; i < matrix.size[0]; i++) {
+            for (let j = 0; j < matrix.size[1]; j++) {
+                if (aux == matrix.celSelect) {
+                    matrix.content[i][j] = cel[matrix.celSelect].innerHTML;
+                }
+                aux++;
+            }
+        }
+    } else if (key == 'system-answer') {
+
     }
 };
 const resetOperation = () => {
@@ -331,15 +350,14 @@ const showSteps = (A) => {
     } else {
         d.getElementById('main').style.filter = 'blur(2px)'
         d.querySelector('.tap-block').style.display = 'block'
-        let steps = gaussJordan(A)
+        let steps
         let aux = []
         let content = d.querySelector('.drop')
         let dom = d.getElementById('showResult')
         dom.style.display = 'grid';
         content.innerHTML = '';
-        matrix.mode = 'matrix'
-        matrix.operation = 'gaussJordan'
         if (matrix.mode == 'matrix' && matrix.operation == 'gaussJordan') {
+            steps = gaussJordan(A)
             for (let i = 0; i < steps.length; i++) {
                 aux = [[],[],[]]
                 for (let x = 0; x < steps[i].resultado.length; x++) {
@@ -362,9 +380,43 @@ const showSteps = (A) => {
             }
             activarDropdown();
 
+        } else if (matrix.mode == 'matrix' && matrix.operation == 'reverse') {
+            let infoInvertir = invertir(A)
+            steps = infoInvertir.pasos
+            aux = [[],[],[]]
+            for (let i = 0; i < steps.length; i++) {
+                aux = [[],[],[]]
+                for (let x = 0; x < steps[i].resultado.length; x++) {
+                    for (let y = 0; y < steps[i].resultado[0].length; y++) {
+                        aux[x][y] = rationalToString(steps[i].resultado[x][y].num, steps[i].resultado[x][y].den)
+                    }
+                }
+                if (i == steps.length - 1) {
+                    content.innerHTML += stepsComponent('final', aux, steps[i].operaciones, 'Por lo tanto, la matriz escalonada es:')
+                    d.getElementsByClassName('range-aux')[i].innerHTML = `Así, el rango de la matríz es: ${rango(steps[i].resultado)}.`
+                } else if (i == 0) {
+                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matríz: ')
+                } else {
+                    content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Realizamos las operaciones fila correspondientes: ')
+                }
+            }
+            for (let i = 0; i < d.getElementsByClassName('matrix').length; i++) {
+                d.getElementsByClassName('matrix')[i].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
+                d.getElementsByClassName('matrix')[i].style.gridTemplateColumns = `repeat(${matrix.size[1]*2}, 30px)`
+                d.getElementsByClassName('matrix')[i].style.order = `3`
+            }
+            for (let i = 0; i < d.getElementsByClassName('dropdown-content').length; i++) {
+                d.getElementsByClassName('dropdown-content')[i].style.display = 'flex'
+                d.getElementsByClassName('dropdown-content')[i].style.flexDirection = 'column'
+                d.getElementsByClassName('dropdown-content')[i].style.alignItems = 'center'
+                d.getElementsByClassName('dropdown-content')[i].style.gap = '0px'
+
+            }
+            activarDropdown();
         }
     }
 }
+
 
 let example = [
     ['2','3','4'],
@@ -377,6 +429,7 @@ for (let i = 0; i < example.length; i++) {
     }
 }
 
+
 matrix.content = [["", "", ""], ["", "", ""], ["", "", ""]];
 matrix.expanded = ["", "", ""];
 matrix.celSelect = 0;
@@ -388,6 +441,7 @@ keyPress('row')
 matrix.celSelect = 7
 makeMatrix()
 keyPress('up')
+matrix.operation = 'reverse'
 showSteps(example)
 
 
