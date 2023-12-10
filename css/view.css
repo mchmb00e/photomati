@@ -163,7 +163,14 @@ header div:last-child svg {
     justify-content: center;
     overflow-x: scroll;
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
+
+.cel-content::-webkit-scrollbar {
+    display: none;
+}
+
 #expanded {
     border-left: 2px solid var(--primary);
     display: grid;
