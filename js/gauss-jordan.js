@@ -291,15 +291,15 @@ const analizarAmpliada = (matrizAmpliadaERF) => {
 }
 
 const comprobarIdentidad = (identidad) => {
-  identidad.forEach((fila, i) => {
-    fila.forEach((elemento, j) => {
+  for (let i = 0; i < identidad.length; i++) {
+    for (let j = 0; j < identidad[i].length; j++) {
       if (i === j) {
-        if (elemento !== 1) return false;  
+        if (identidad[i][j].num !== 1) return false;  
       } else {
-        if (elemento !== 0) return false;
+        if (identidad[i][j].num !== 0) return false;
       }
-    });
-  });
+    }
+  }
   return true;
 }
 

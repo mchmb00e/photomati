@@ -381,9 +381,9 @@ const showSteps = (A) => {
             activarDropdown();
 
         } else if (matrix.mode == 'matrix' && matrix.operation == 'reverse') {
+            console.log(invertir(A))
             let infoInvertir = invertir(A)
             steps = infoInvertir.pasos
-            console.log(infoInvertir)
             aux = [[],[],[]]
             for (let i = 0; i < steps.length; i++) {
                 aux = [[],[],[]]
@@ -398,12 +398,12 @@ const showSteps = (A) => {
                             infoInvertir.inversa[x][y] = rationalToString(infoInvertir.inversa[x][y].num, infoInvertir.inversa[x][y].den)
                         }
                     }
-                    content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, '')
+                    content.innerHTML += stepsComponent(i == 0 ? 'inicial' : 0, aux, steps[i].operaciones, '')
                     if (infoInvertir.invertible) {
                         content.innerHTML += stepsComponent('final', infoInvertir.inversa, [], '')
                         d.getElementsByClassName('range-aux')[i + 1].innerHTML = `Matriz inversa`
                     }
-                    d.getElementsByClassName('range-aux')[i].innerHTML = `Por lo tanto, la matriz es ${infoInvertir.invertible ? "invertible" : "no invertible"}.`
+                    d.getElementsByClassName('range-aux')[i].innerHTML = `La matriz es ${infoInvertir.invertible ? "invertible" : "no invertible"}.`
                 } else if (i == 0) {
                     content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Reducimos la siguiente matriz por Gauss-Jordan: ')
                 } else {
@@ -416,7 +416,7 @@ const showSteps = (A) => {
                         A[x][y] = rationalToString(A[x][y].num, A[x][y].den)
                     }
                 }
-                content.innerHTML += stepsComponent('inicial', A, [], 'La matriz no es invertible: ')
+                content.innerHTML += stepsComponent('inicial', A, [], 'La matriz no es invertible, dado que no es cuadrada.') 
             }
             for (let i = 0; i < d.getElementsByClassName('matrix').length; i++) {
                 d.getElementsByClassName('matrix')[i].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
@@ -438,9 +438,9 @@ const showSteps = (A) => {
 
 
 let example = [
-    ['2','3','4', '5'],
-    ['4','1','5', '3'],
-    ['9','4','1', '2']
+    ['1','3', '5'],
+    ['0','0', '0'],
+    ['0','0', '0']
 ]
 for (let i = 0; i < example.length; i++) {
     for (let j = 0; j < example[0].length; j++) {
