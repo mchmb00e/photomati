@@ -198,13 +198,13 @@ const keyPress = (key) => {
     } else if (key == 'right-change' && btnColRow[keyModifySelect].innerHTML < '5') {
         sizeAux[keyModifySelect] += 1;
         btnColRow[keyModifySelect].innerHTML = sizeAux[keyModifySelect];
-    } else if (key == 'right') {
+    } else if (key == 'right' && matrix.celSelect % matrix.size[1] !== matrix.size[1] - 1) {
         if (matrix.celSelect == matrix.size[0] * matrix.size[1] - 1) {
             selectCel(0);
         } else {
             selectCel(matrix.celSelect + 1);
         }
-    } else if (key == 'left') {
+    } else if (key == 'left' && matrix.celSelect % matrix.size[1] !== 0) {
         if (matrix.celSelect == 0) {
             selectCel(matrix.size[0] * matrix.size[1] - 1);
         } else {
@@ -219,7 +219,7 @@ const keyPress = (key) => {
             aux = aux - 1;
         }
         selectCel(aux);
-    } else if (key == 'down') {
+    } else if (key == 'down' && lengthMatrix(matrix) - matrix.celSelect > matrix.size[1]) {
         aux = matrix.celSelect;
         for (let i = 0; i < matrix.size[1]; i++) {
             if (aux == matrix.size[0] * matrix.size[1]) {
