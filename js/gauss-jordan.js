@@ -308,7 +308,7 @@ const invertir = (matriz) => {
   let numeroColumnas = matriz[0].length;
 
   if (numeroFilas !== numeroColumnas) {
-    return {pasos: [], tipo: "No invertible", resultado: []}
+    return {pasos: [], invertible: false, resultado: []}
   } else {
     let matrizAmpliada = matriz.slice().map((fila, i) => {
       let filaIdentidad = new Array(numeroColumnas).fill({num: 0, den: 1});
@@ -316,7 +316,7 @@ const invertir = (matriz) => {
       return fila.concat(filaIdentidad);
     });
 
-    let retorno = {pasos: [], tipo: "", inversa: []};
+    let retorno = {pasos: [], invertible: false, inversa: []};
     
     let pasos = gaussJordan(matrizAmpliada);
     retorno.pasos = pasos;
@@ -324,9 +324,7 @@ const invertir = (matriz) => {
     let identidad = pasos[pasos.length - 1].resultado.map((fila) => fila.slice(0, numeroFilas));
     if (comprobarIdentidad(identidad)) {
       retorno.inversa = pasos[pasos.length - 1].resultado.map((fila) => fila.slice(numeroFilas, numeroFilas * 2));
-      retorno.tipo = "Invertible";
-    } else {
-      retorno.tipo = "No invertible";
+      retorno.invertible = true;
     }
     return retorno;
   }
