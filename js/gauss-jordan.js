@@ -308,7 +308,7 @@ const invertir = (matriz) => {
   let numeroColumnas = matriz[0].length;
 
   if (numeroFilas !== numeroColumnas) {
-    return {pasos: [], invertible: false, resultado: []}
+    return {pasos: [], invertible: false, inversa: []}
   } else {
     let matrizAmpliada = matriz.slice().map((fila, i) => {
       let filaIdentidad = new Array(numeroColumnas).fill({num: 0, den: 1});

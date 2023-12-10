@@ -366,12 +366,12 @@ const showSteps = (A) => {
                     }
                 }
                 if (i == steps.length - 1) {
-                    content.innerHTML += stepsComponent('final', aux, steps[i].operaciones, 'Por lo tanto, la matriz escalonada es:')
-                    d.getElementsByClassName('range-aux')[i].innerHTML = `Así, el rango de la matríz es: ${rango(steps[i].resultado)}.`
+                    content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, 'Por lo tanto, la matriz escalonada es:')
+                    d.getElementsByClassName('range-aux')[i].innerHTML = `El rango de la matríz es: ${rango(steps[i].resultado)}.`
                 } else if (i == 0) {
-                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matríz: ')
+                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Reducimos la siguiente matriz por Gauss-Jordan: ')
                 } else {
-                    content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Realizamos las operaciones fila correspondientes: ')
+                    content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, 'Realizamos las siguientes operaciones fila: ')
                 }
             }
             for (let i = 0; i < d.getElementsByClassName('matrix').length; i++) {
@@ -383,6 +383,7 @@ const showSteps = (A) => {
         } else if (matrix.mode == 'matrix' && matrix.operation == 'reverse') {
             let infoInvertir = invertir(A)
             steps = infoInvertir.pasos
+            console.log(infoInvertir)
             aux = [[],[],[]]
             for (let i = 0; i < steps.length; i++) {
                 aux = [[],[],[]]
@@ -392,19 +393,37 @@ const showSteps = (A) => {
                     }
                 }
                 if (i == steps.length - 1) {
-                    content.innerHTML += stepsComponent('final', aux, steps[i].operaciones, 'Por lo tanto, la matriz escalonada es:')
-                    d.getElementsByClassName('range-aux')[i].innerHTML = `Así, el rango de la matríz es: ${rango(steps[i].resultado)}.`
+                    for (let x = 0; x < infoInvertir.inversa.length; x++) {
+                        for (let y = 0; y < infoInvertir.inversa[0].length; y++) {
+                            infoInvertir.inversa[x][y] = rationalToString(infoInvertir.inversa[x][y].num, infoInvertir.inversa[x][y].den)
+                        }
+                    }
+                    content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, '')
+                    if (infoInvertir.invertible) {
+                        content.innerHTML += stepsComponent('final', infoInvertir.inversa, [], '')
+                        d.getElementsByClassName('range-aux')[i + 1].innerHTML = `Matriz inversa`
+                    }
+                    d.getElementsByClassName('range-aux')[i].innerHTML = `Por lo tanto, la matriz es ${infoInvertir.invertible ? "invertible" : "no invertible"}.`
                 } else if (i == 0) {
-                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matríz: ')
+                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Reducimos la siguiente matriz por Gauss-Jordan: ')
                 } else {
-                    content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Realizamos las operaciones fila correspondientes: ')
+                    content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, 'Realizamos las siguientes operaciones fila: ')
                 }
+            }
+            if (!infoInvertir.invertible && infoInvertir.pasos.length == 0) {
+                for (let x = 0; x < A.length; x++) {
+                    for (let y = 0; y < A[0].length; y++) {
+                        A[x][y] = rationalToString(A[x][y].num, A[x][y].den)
+                    }
+                }
+                content.innerHTML += stepsComponent('inicial', A, [], 'La matriz no es invertible: ')
             }
             for (let i = 0; i < d.getElementsByClassName('matrix').length; i++) {
                 d.getElementsByClassName('matrix')[i].style.gridTemplateRows = `repeat(${matrix.size[0]}, 30px)`
                 d.getElementsByClassName('matrix')[i].style.gridTemplateColumns = `repeat(${matrix.size[1]*2}, 30px)`
                 d.getElementsByClassName('matrix')[i].style.order = `3`
             }
+            d.getElementsByClassName('matrix')[d.getElementsByClassName('matrix').length - 1].style.gridTemplateColumns = `repeat(${matrix.size[1]}, 30px)`
             for (let i = 0; i < d.getElementsByClassName('dropdown-content').length; i++) {
                 d.getElementsByClassName('dropdown-content')[i].style.display = 'flex'
                 d.getElementsByClassName('dropdown-content')[i].style.flexDirection = 'column'
@@ -419,9 +438,9 @@ const showSteps = (A) => {
 
 
 let example = [
-    ['2','3','4'],
-    ['4','1','5'],
-    ['9','4','1']
+    ['2','3','4', '5'],
+    ['4','1','5', '3'],
+    ['9','4','1', '2']
 ]
 for (let i = 0; i < example.length; i++) {
     for (let j = 0; j < example[0].length; j++) {
