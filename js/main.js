@@ -46,8 +46,10 @@ const changeSize = (x) => {
         d.getElementsByClassName('tap-block')[0].style.display = 'none';
         matrix.size[0] = sizeAux[0];
         matrix.size[1] = sizeAux[1];
+        if (matrix.mode == 'system') {
+            matrix.size[1] = sizeAux[1]-1;
+        }
         makeMatrix();
-
     }
 };
 
@@ -72,7 +74,7 @@ const changeMatrix = (x) => {
     if (x == 0) {
         optionShow[1].style.backgroundColor = 'white';
         optionShow[1].style.color = '#C1143A';
-        if (matrix.mode == 'system') {
+        if (matrix.mode == 'system' && matrix.size[1] >= 2) {
             matrix.size[1]--;
         }
         matrix.mode = 'matrix';
@@ -208,7 +210,7 @@ const keyPress = (key) => {
         } else {
             selectCel(matrix.celSelect - 1);
         }
-    } else if (key == 'up') {
+    } else if (key == 'up' && matrix.celSelect >= matrix.size[1]) {
         aux = matrix.celSelect;
         for (let i = 0; i < matrix.size[1]; i++) {
             if (aux == parseInt('-1')) {
@@ -272,14 +274,14 @@ const keyPress = (key) => {
         showSteps(aux);
     } else if (key == '-' && cel[matrix.celSelect].innerHTML.length == 0) {
         aux = 0;
-        cel[matrix.celSelect].innerHTML += key;
-        for (let i = 0; i < matrix.size[0]; i++) {
-            for (let j = 0; j < matrix.size[1]; j++) {
-                if (aux == matrix.celSelect) {
-                    matrix.content[i][j] += key;
+            cel[matrix.celSelect].innerHTML += key;
+            for (let i = 0; i < matrix.size[0]; i++) {
+                for (let j = 0; j < matrix.size[1]; j++) {
+                    if (aux == matrix.celSelect) {
+                        matrix.content[i][j] += key;
+                    }
+                    aux++;
                 }
-                aux++;
-            }
         }
     } else if (key == 'delete') {
         aux = 0;
@@ -308,7 +310,7 @@ const keyPress = (key) => {
 };
 const resetOperation = () => {
     matrix.operation = null;
-    d.getElementById('reverse-btn').style.backgroundColor = 'White';
+    d.getElementById('reverse-btn').style.backgroundColor = 'White';x
     d.getElementById('reverse-btn').style.color = '#C1143A';
     d.getElementById('gauss-jordan-btn').style.backgroundColor = 'White';
     d.getElementById('gauss-jordan-btn').style.color = '#C1143A';
@@ -324,10 +326,12 @@ const selectCel = (x) => {
         celExp[i].style.color = 'black';
     }
     if (typeof(x) == 'number') {
-        cel[x].style.border = '2px solid #C1143A';
+        cel[x].style.border = '4px solid #C1143A';
+        cel[x].style.borderRadius = '5px    ';
         cel[x].style.color = '#C1143A';
     } else if (typeof(x) == 'string') {
-        celExp[Number(x[1])].style.border = '2px solid #C1143A';
+        celExp[Number(x[1])].style.border = '4px solid #C1143A';
+        celExp[Number(x[1])].style.borderRadius = '5px  ';
         celExp[Number(x[1])].style.color = '#C1143A';
         
     }
@@ -375,7 +379,10 @@ const showSteps = (A) => {
         if (matrix.mode == 'matrix' && matrix.operation == 'gaussJordan') {
             steps = gaussJordan(A)
             for (let i = 0; i < steps.length; i++) {
-                aux = [[],[],[]]
+                aux = []
+                for (let q = 0; q < matrix.size[0]; q++) {
+                    aux[q] = []
+                }
                 for (let x = 0; x < steps[i].resultado.length; x++) {
                     for (let y = 0; y < steps[i].resultado[0].length; y++) {
                         aux[x][y] = rationalToString(steps[i].resultado[x][y].num, steps[i].resultado[x][y].den)
@@ -383,9 +390,9 @@ const showSteps = (A) => {
                 }
                 if (i == steps.length - 1) {
                     content.innerHTML += stepsComponent('final', aux, steps[i].operaciones, 'Por lo tanto, la matriz escalonada es:')
-                    d.getElementsByClassName('range-aux')[i].innerHTML = `Así, el rango de la matríz es: ${rango(steps[i].resultado)}.`
+                    d.getElementsByClassName('range-aux')[i].innerHTML = `Así, el rango de la matriz es: ${rango(steps[i].resultado)}.`
                 } else if (i == 0) {
-                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matríz: ')
+                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matriz: ')
                 } else {
                     content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Realizamos las operaciones fila correspondientes: ')
                 }
@@ -402,7 +409,10 @@ const showSteps = (A) => {
             console.log(invertir(A))
             let infoInvertir = invertir(A)
             steps = infoInvertir.pasos
-            aux = [[],[],[]]
+            aux = []
+            for (let q = 0; q < matrix.size[0]; q++) {
+                aux[q] = []
+            }
             for (let i = 0; i < steps.length; i++) {
                 aux = [[],[],[]]
                 for (let x = 0; x < steps[i].resultado.length; x++) {
@@ -419,11 +429,11 @@ const showSteps = (A) => {
                     content.innerHTML += stepsComponent(i == 0 ? 'inicial' : i, aux, steps[i].operaciones, '')
                     if (infoInvertir.invertible) {
                         content.innerHTML += stepsComponent('final', infoInvertir.inversa, [], '')
-                        d.getElementsByClassName('range-aux')[i + 1].innerHTML = `Resultado matriz inversa:`
+                        d.getElementsByClassName('range-aux')[i + 1].innerHTML = `Por lo tanto, la matriz inversa es:`
                     }
                     d.getElementsByClassName('range-aux')[i].innerHTML = `Realizamos las siguientes operaciones fila:`
                 } else if (i == 0) {
-                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matríz: ')
+                    content.innerHTML += stepsComponent('inicial', aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la siguiente matriz: ')
                 } else {
                     content.innerHTML += stepsComponent(i, aux, steps[i].operaciones, 'Realizamos las siguientes operaciones fila: ')
                 }
@@ -464,7 +474,7 @@ const showSteps = (A) => {
                     }
                 }
                 if (i == 0) {
-                    content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Mediante Gauss-Jordan reducieremos la matríz:')
+                    content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Mediante Gauss-Jordan reduciremos la matriz:')
                 } else {
                     content.innerHTML += stepsComponent(i+1, aux, steps[i].operaciones, 'Realizamos las operaciones fila correspondientes:')
                 }
