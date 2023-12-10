@@ -154,6 +154,7 @@ header div:last-child svg {
 }
 .cel-content {
     border: 1px solid var(--primary);
+    border-radius: 5px;
     font-family: 'Inter';
     font-size: 10px;
     text-align: center;
