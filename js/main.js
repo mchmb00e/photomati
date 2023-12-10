@@ -410,11 +410,11 @@ const showSteps = (A) => {
             let infoInvertir = invertir(A)
             steps = infoInvertir.pasos
             aux = []
-            for (let q = 0; q < matrix.size[0]; q++) {
-                aux[q] = []
-            }
+            
             for (let i = 0; i < steps.length; i++) {
-                aux = [[],[],[]]
+                for (let q = 0; q < matrix.size[0]; q++) {
+                    aux[q] = []
+                }
                 for (let x = 0; x < steps[i].resultado.length; x++) {
                     for (let y = 0; y < steps[i].resultado[0].length; y++) {
                         aux[x][y] = rationalToString(steps[i].resultado[x][y].num, steps[i].resultado[x][y].den)
