@@ -283,7 +283,11 @@ const keyPress = (key) => {
         for (let i = 0; i < matrix.size[0]; i++) {
             for (let j = 0; j < matrix.size[1]; j++) {
                 if (aux == matrix.celSelect) {
-                    matrix.content[i][j] += key;
+                    if (matrix.content[i][j].includes('-')) {
+                        matrix.content[i][j] = matrix.content[i][j].slice(1, matrix.content[i][j].length);
+                    } else {
+                        matrix.content[i][j] = '-' + matrix.content[i][j];
+                    }
                 }
                 aux++;
             }
