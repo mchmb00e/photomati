@@ -561,7 +561,6 @@ matrix.celSelect = 0
 makeMatrix()
 keyPress('up')
 changeSize(1)
-changeSize(2)
 
 
 /*
