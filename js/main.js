@@ -66,9 +66,11 @@ const changeSize = (x) => {
         } else if (matrix.mode == 'system') {
             matrix.size[1] = sizeAux[1] + 1;
         }
-        d.getElementById('order-content').innerHTML = matrix.size[0] + 'x' + matrix.size[1]
         if (matrix.mode == 'system') {
             aux = true
+            d.getElementById('order-content').innerHTML = matrix.size[0] + 'x' + (matrix.size[1]-1).toString()
+        } else {
+            d.getElementById('order-content').innerHTML = matrix.size[0] + 'x' + (matrix.size[1]).toString()
         }
         changeMatrix(0)
         makeMatrix();
