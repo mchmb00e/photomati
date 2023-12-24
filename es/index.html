@@ -30,16 +30,17 @@
         </div>
         <div class="py-3"></div> <!-- Spacing between top and bot in header -->
         <div class="container-md d-flex flex-row justify-content-between align-items-center">
-            <div class="subtitle col-4">Mis proyectos <span class="fw-bold">→</span></div>
-            <div class="subtitle col-4 text-center d-flex flex-row justify-content-center align-items-center gap-5">
-                <span onclick="show('design')">Diseño</span>/<span onclick="show('development')">Desarrollo</span></div>
-            <div class=" col-4"></div>
+            <div class="subtitle col-4">Ver mis proyectos <span class="fw-bold">→</span></div>
+            <div class="subtitle col-4 text-center d-flex flex-row justify-content-center align-items-center gap-md-5 gap-2">
+                <span onclick="show('design')">Diseño</span>/<span onclick="show('development')">Desarrollo</span>
+            </div>
+            <div class="col-md-4 col-0"></div>
         </div>
     </header>
 
     <main class="bg-black">
         <div class="container-md d-flex flex-md-row flex-column flex-wrap z-1">
-            <div  style="width: 50% !important; z-index: 2;">
+            <div class="col-md-6" style="z-index: 2;">
                 <div class="overflow-y-scroll no-scrollbar" style="height: 30vh;">
                     <img style="width: 100%;" src="../content/rsc/img/barsantiago_cl.webp">
                 </div>
@@ -52,11 +53,11 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 50% !important; z-index: 1;">
+            <div class="col-md-6" style="z-index: 1;">
                 <div class="p-4 bg-principal" style="z-index: 1;">
                     <h2 class="title fw-bold text-center">¡Crea, desarrolla, implementa!</h2>
                     <p class="text text-black fs-6">¿Necesitas implementar un proyecto en tu empresa?
-                        Escuchamos tu idea y te enviamos una cotización que
+                        Escuchamos tu idea y te envío una cotización que
                         se adapte a las necesidades de tu negocio.</p>
                     <div class="d-flex flex-column justify-content-start align-items-center gap-5 z-2">
                         <div class="btn-black text-black fs-6">Contáctame</div>
@@ -64,11 +65,17 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 50% !important; z-index: 1;">
-                <div class="p-4 bg-principal">
-                    <h2 class="subtitle fw-bold">¡Tu sitio web en todos los dispositivos!</h2>
-                    <p class="text">Adaptamos tu sitio web para que sea 100% compatible en cualquier dispositivo.</p>
-                    <div class="graph">
+        </div>
+    </main>
+
+    <section class="bg-black">
+        <div class="container-md d-md-flex">
+            <div class="col-md-6">
+                <div class="p-5 bg-principal">
+                    <h2 class="title fw-bold">¡Tu sitio web en todos los dispositivos!</h2>
+                    <p class="text mt-2">Adaptamos tu sitio web para que sea 100% compatible en cualquier dispositivo.
+                    </p>
+                    <div class="graph mt-5">
                         <div class="bar-distribution">
                             <div class="bar" id="percent-1">45%</div>
                             <div class="bar" id="percent-2">30%</div>
@@ -81,24 +88,84 @@
                             <p class="text">Otros</p>
                         </div>
                     </div>
+                    <p class="text fw-bold text-center mt-2">Uso de dispositivos para compras en línea en %.</p>
+                </div>
+                <div class="py-3 bg-principal"></div>
+                <div class="p-5 bg-principal">
+                    <h2 class="text-center title fw-bold">¡Contáctame!</h2>
+                    <form method="post" class="form">
+                            <label for="name">
+                                <span class="text">Nombre:</span> <input class="d-block  bg-transparent border-2 border-black" type="text" name="name" id="name">
+                            </label>
+                            <label for="tel">
+                                <span class="text">Teléfono:</span> <input class="d-block  bg-transparent border-2 border-black" type="tel" name="tel" id="tel">
+                            </label>
+                            <label for="email">
+                                <span class="text">Email:</span> <input class="d-block  bg-transparent border-2 border-black" type="email" name="email" id="email">
+                            </label>
+                            <label for="subject">
+                                <span class="text">Estoy interesado en:</span>
+                                <select class="d-block  bg-transparent border-2 border-black" name="subject" id="subject">
+                                    <option value="Tener un nuevo sitio web">Tener un nuevo sitio web</option>
+                                    <option value="Continuar con mi actual sitio web">Continuar con mi actual sitio web</option>
+                                    <option value="Renovar el diseño de mi actual sitio web">Renovar el diseño de mi actual sitio web</option>
+                                    <option value="Estoy interesado en otra idea">Estoy interesado en otra idea</option>
+                                </select>
+                            </label>
+                        <label for="description">
+                            <span class="text">Describe un poco tu objetivo:</span>
+                            <textarea class="d-block bg-transparent border-2 border-black" name="description" id="description" cols="30" rows="10"></textarea>
+                        </label>
+                        <button type="submit" class="btn-black text-black mt-3" style="grid-column: 1/3;">Enviar</button>
+                    </form>
                 </div>
             </div>
-            <div  style="width: 50% !important; z-index: 2;">
-                <div class="overflow-y-scroll no-scrollbar" style="height: 30vh;">
-                    <img style="width: 100%;" src="../content/rsc/img/barsantiago_cl.webp">
-                </div>
-                <div class="bg-black p-3">
-                    <h2 class="subtitle fw-bold text-white">Diseño web de Bar Santiago</h2>
-                    <p class="text text-white">Diseño web presentado a importante restaurante de la región metropolitana
-                        de Chile.</p>
-                    <div class="d-flex justify-content-start">
-                        <div class="btn-white text-white">Ver proyecto</div>
+            <div class="col-md-6 bg-2-principal p-4">
+                <h2 class="title text-center fw-bold text-white text-center">¡Conóceme!</h2>
+                <div class="d-flex">
+                    <div class="col-6 d-flex flex-column justify-content-start align-items-center">
+                        <fieldset class="border border-2 p-2 rounded">
+                            <legend  class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i class="bi bi-person icon"></i>¿Quién soy?</legend>
+                            <p class="text text-white">Soy Miguel Chamorro, tengo 18 años y vivo en Santiago de Chile.<br>Tengo experiencia en el diseño y desarrollo web con clientes de distintas áreas, enfocado en desarrollar sitios web informativos, agendamiento de citas y comercio el línea.
+
+                                <br><br><u><i>>>> Ver mis proyectos</i></u></p>
+                        </fieldset>
+                        <fieldset class="border border-2 p-2 rounded mt-5">
+                            <legend  class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i class="bi bi-mortarboard icon"></i>Estudios</legend>
+                            <p class="text text-white">2023 / Liceo Politénico Andes<br><b>Técnico nivel medio en telecomunicaciones</b></p>
+                            <p class="text text-white">En curso / Universidad de Santiago de Chile<br><b>Licenciatura en Ciencia de la Computación</b></p>
+                            <p class="text text-white">2022 / FreeCodeCamp<br><b>Responsive Web Design Certification</b></p>
+                        </fieldset>
+                        <fieldset class="border border-2 p-2 rounded mt-5">
+                            <legend  class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i class="bi bi-trophy icon"></i>Logros</legend>
+                            <p class="text text-white">2022 / Duoc UC<br><b>Tercer lugar en competencia nacional HACKATHON CITT</b></p>
+                        </fieldset>
+                    </div>
+                    <div class="col-6 d-flex flex-column justify-content-end align-items-center">
+                            <img src="../content/rsc/img/profile.webp" style="width: 150px; height: auto;">
+                            <h2 class="subtitle fw-bold text-white m-0">Miguel Chamorro</h2>
+                            <p class="text text-white">Desarrollador Web</p>
+                            <div class="py-5"></div>
+                            <fieldset class="border border-2 p-2 rounded mt-5" style="width: 80%;">
+                                <legend  class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i class="bi bi-trophy icon"></i>Logros</legend>
+                                <ul type="circle-fill">
+                                    <li class="text-white text">HTML</li>
+                                    <li class="text-white text">CSS</li>
+                                    <li class="text-white text">JavaScript</li>
+                                    <li class="text-white text">PHP</li>
+                                    <li class="text-white text">WordPress</li>
+                                    <li class="text-white text">Elementor</li>
+                                    <li class="text-white text">Adobe XD</li>
+                                    <li class="text-white text">Figma</li>
+                                </ul>
+                            </fieldset>
+                            <img class="mt-5" src="../content/rsc/svg/complete_smartphone.png" style="width: 80%; height: auto;">
                     </div>
                 </div>
             </div>
         </div>
-        </main>
-        
+    </section>
+
     <script src="../node_modules/bootstrap-icons/font/bootstrap-icons.json"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>

@@ -11,7 +11,7 @@
     /* Principal text style */
     --s-title: 24px;
     --s-subtitle: 18px;
-    --s-p: 12px;
+    --s-p: 14px;
 
     /*fonts*/
     --f-title: 'Rubik';
@@ -89,7 +89,6 @@
 }
 .bar {
     background-color: var(--color_2);
-    height: 100px;
     width: 35px;
     border-radius: 5px 5px 0px 0px;
     display: flex;
@@ -104,6 +103,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: flex-end;
     gap: 50px;
 }
 .line-separation {
@@ -117,4 +117,38 @@
     flex-direction: row;
     justify-content: center;
     gap: 30px;
+}
+#percent-1 {
+    height: 100px;
+}
+#percent-2 {
+    height: 80px;
+}
+#percent-3 {
+    height: 60px;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 10px;
+}
+.form label input, .form label select {
+    width: 100%;
+    height: 35px;
+    border-radius: var(--border-radius-simple);
+    color: var(--color_4);
+}
+label[for="description"] {
+    grid-column: 1 / 3;
+    width: 100%;
+}
+label[for="description"] textarea {
+    width: 100%;
+    font-size: var(--s-p);
+    font-family: var(--f-p);
+    padding: 10px;
+}
+.bg-2-principal {
+    background-color: var(--color_2);
 }
