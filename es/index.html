@@ -23,16 +23,23 @@
                 <h1 class="title">Miguel<br><b>Chamorro</b></h1>
             </div>
             <div class="d-flex flex-row justify-content-between align-items-center gap-2">
-                <div class="btn-black" href="#form">¡Contáctame!</div>
-                <i class="bi bi-envelope icon-black" onclick="copy('miguelchamorro912@gmail.com')"></i>
-                <div onclick="redirect('../en')">ESP</div>
+                <a class="text-reset text-decoration-none" href="#contact">
+                    <div class="btn-black">¡Contáctame!</div>
+                </a>
+                <a href="mailto:miguelchamorro912@gmail.com" onclick="copy('miguelchamorro912@gmail.com')"><i
+                        class="bi bi-envelope icon-black"></i></a>
+                <a class="text-decoration-none text-reset" href="../en">
+                    <div>ESP</div>
+                </a>
             </div>
         </div>
         <div class="py-3"></div> <!-- Spacing between top and bot in header -->
         <div class="container-md d-flex flex-row justify-content-between align-items-center">
             <div class="subtitle col-4">Ver mis proyectos <span class="fw-bold">→</span></div>
-            <div class="subtitle col-4 text-center d-flex flex-row justify-content-center align-items-center gap-md-5 gap-2">
-                <span onclick="show('design')">Diseño</span>/<span onclick="show('development')">Desarrollo</span>
+            <div
+                class="subtitle col-4 text-center d-flex flex-row justify-content-center align-items-center gap-md-5 gap-2">
+                <span><a href="/proyectos/" target="_self" class="text-reset">Diseño</a></span>/<span><a
+                        class="text-reset" href="/proyectos/" target="_self">Desarrollo</a></span>
             </div>
             <div class="col-md-4 col-0"></div>
         </div>
@@ -49,7 +56,9 @@
                     <p class="text text-white">Diseño web presentado a importante restaurante de la región metropolitana
                         de Chile.</p>
                     <div class="d-flex justify-content-start">
-                        <div class="btn-white text-white">Ver proyecto</div>
+                        <a href="/proyectos/barsantiago" target="_blank" class="text-decoration-none text-reset">
+                            <div class="btn-white text-white">Ver proyecto</div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -60,7 +69,9 @@
                         Escuchamos tu idea y te envío una cotización que
                         se adapte a las necesidades de tu negocio.</p>
                     <div class="d-flex flex-column justify-content-start align-items-center gap-5 z-2">
+                        <a href="#contact" class="text-decoration-none text-reset">
                         <div class="btn-black text-black fs-6">Contáctame</div>
+                        </a>
                         <img src="../content/rsc/svg/working_remotely.svg">
                     </div>
                 </div>
@@ -92,31 +103,39 @@
                 </div>
                 <div class="py-3 bg-principal"></div>
                 <div class="p-5 bg-principal">
-                    <h2 class="text-center title fw-bold">¡Contáctame!</h2>
-                    <form method="post" class="form">
-                            <label for="name">
-                                <span class="text">Nombre:</span> <input class="d-block  bg-transparent border-2 border-black" type="text" name="name" id="name">
-                            </label>
-                            <label for="tel">
-                                <span class="text">Teléfono:</span> <input class="d-block  bg-transparent border-2 border-black" type="tel" name="tel" id="tel">
-                            </label>
-                            <label for="email">
-                                <span class="text">Email:</span> <input class="d-block  bg-transparent border-2 border-black" type="email" name="email" id="email">
-                            </label>
-                            <label for="subject">
-                                <span class="text">Estoy interesado en:</span>
-                                <select class="d-block  bg-transparent border-2 border-black" name="subject" id="subject">
-                                    <option value="Tener un nuevo sitio web">Tener un nuevo sitio web</option>
-                                    <option value="Continuar con mi actual sitio web">Continuar con mi actual sitio web</option>
-                                    <option value="Renovar el diseño de mi actual sitio web">Renovar el diseño de mi actual sitio web</option>
-                                    <option value="Estoy interesado en otra idea">Estoy interesado en otra idea</option>
-                                </select>
-                            </label>
+                    <h2 class="text-center title fw-bold" id="contact">¡Contáctame!</h2>
+                    <form method="post" class="form" id="form">
+                        <label for="name">
+                            <span class="text">Nombre:</span> <input
+                                class="d-block  bg-transparent border-2 border-black" type="text" name="name" id="name">
+                        </label>
+                        <label for="tel">
+                            <span class="text">Teléfono:</span> <input
+                                class="d-block  bg-transparent border-2 border-black" type="tel" name="tel" id="tel">
+                        </label>
+                        <label for="email">
+                            <span class="text">Email:</span> <input
+                                class="d-block  bg-transparent border-2 border-black" type="email" name="email"
+                                id="email">
+                        </label>
+                        <label for="subject">
+                            <span class="text">Estoy interesado en:</span>
+                            <select class="d-block  bg-transparent border-2 border-black" name="subject" id="subject">
+                                <option value="Tener un nuevo sitio web">Tener un nuevo sitio web</option>
+                                <option value="Continuar con mi actual sitio web">Continuar con mi actual sitio web
+                                </option>
+                                <option value="Renovar el diseño de mi actual sitio web">Renovar el diseño de mi actual
+                                    sitio web</option>
+                                <option value="Estoy interesado en otra idea">Estoy interesado en otra idea</option>
+                            </select>
+                        </label>
                         <label for="description">
                             <span class="text">Describe un poco tu objetivo:</span>
-                            <textarea class="d-block bg-transparent border-2 border-black" name="description" id="description" cols="30" rows="10"></textarea>
+                            <textarea class="d-block bg-transparent border-2 border-black" name="description"
+                                id="description" cols="30" rows="10"></textarea>
                         </label>
-                        <button type="submit" class="btn-black text-black mt-3" style="grid-column: 1/3;">Enviar</button>
+                        <button type="submit" class="btn-black text-black mt-3"
+                            style="grid-column: 1/3;">Enviar</button>
                     </form>
                 </div>
             </div>
@@ -125,41 +144,54 @@
                 <div class="d-flex">
                     <div class="col-6 d-flex flex-column justify-content-start align-items-center">
                         <fieldset class="border border-2 p-2 rounded">
-                            <legend  class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i class="bi bi-person icon"></i>¿Quién soy?</legend>
-                            <p class="text text-white">Soy Miguel Chamorro, tengo 18 años y vivo en Santiago de Chile.<br>Tengo experiencia en el diseño y desarrollo web con clientes de distintas áreas, enfocado en desarrollar sitios web informativos, agendamiento de citas y comercio el línea.
+                            <legend class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i
+                                    class="bi bi-person icon"></i>¿Quién soy?</legend>
+                            <p class="text text-white">Soy Miguel Chamorro, tengo 18 años y vivo en Santiago de
+                                Chile.<br>Tengo experiencia en el diseño y desarrollo web con clientes de distintas
+                                áreas, enfocado en desarrollar sitios web informativos, agendamiento de citas y comercio
+                                el línea.
 
-                                <br><br><u><i>>>> Ver mis proyectos</i></u></p>
+                                <br><br><u><i>>>> Ver mis proyectos</i></u>
+                            </p>
                         </fieldset>
                         <fieldset class="border border-2 p-2 rounded mt-5">
-                            <legend  class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i class="bi bi-mortarboard icon"></i>Estudios</legend>
-                            <p class="text text-white">2023 / Liceo Politénico Andes<br><b>Técnico nivel medio en telecomunicaciones</b></p>
-                            <p class="text text-white">En curso / Universidad de Santiago de Chile<br><b>Licenciatura en Ciencia de la Computación</b></p>
-                            <p class="text text-white">2022 / FreeCodeCamp<br><b>Responsive Web Design Certification</b></p>
+                            <legend class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i
+                                    class="bi bi-mortarboard icon"></i>Estudios</legend>
+                            <p class="text text-white">2023 / Liceo Politénico Andes<br><b>Técnico nivel medio en
+                                    telecomunicaciones</b></p>
+                            <p class="text text-white">En curso / Universidad de Santiago de Chile<br><b>Licenciatura en
+                                    Ciencia de la Computación</b></p>
+                            <p class="text text-white">2022 / FreeCodeCamp<br><b>Responsive Web Design Certification</b>
+                            </p>
                         </fieldset>
                         <fieldset class="border border-2 p-2 rounded mt-5">
-                            <legend  class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i class="bi bi-trophy icon"></i>Logros</legend>
-                            <p class="text text-white">2022 / Duoc UC<br><b>Tercer lugar en competencia nacional HACKATHON CITT</b></p>
+                            <legend class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i
+                                    class="bi bi-trophy icon"></i>Logros</legend>
+                            <p class="text text-white">2022 / Duoc UC<br><b>Tercer lugar en competencia nacional
+                                    HACKATHON CITT</b></p>
                         </fieldset>
                     </div>
                     <div class="col-6 d-flex flex-column justify-content-end align-items-center">
-                            <img src="../content/rsc/img/profile.webp" style="width: 150px; height: auto;">
-                            <h2 class="subtitle fw-bold text-white m-0">Miguel Chamorro</h2>
-                            <p class="text text-white">Desarrollador Web</p>
-                            <div class="py-5"></div>
-                            <fieldset class="border border-2 p-2 rounded mt-5" style="width: 80%;">
-                                <legend  class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i class="bi bi-trophy icon"></i>Logros</legend>
-                                <ul type="circle-fill">
-                                    <li class="text-white text">HTML</li>
-                                    <li class="text-white text">CSS</li>
-                                    <li class="text-white text">JavaScript</li>
-                                    <li class="text-white text">PHP</li>
-                                    <li class="text-white text">WordPress</li>
-                                    <li class="text-white text">Elementor</li>
-                                    <li class="text-white text">Adobe XD</li>
-                                    <li class="text-white text">Figma</li>
-                                </ul>
-                            </fieldset>
-                            <img class="mt-5" src="../content/rsc/svg/complete_smartphone.png" style="width: 80%; height: auto;">
+                        <img src="../content/rsc/img/profile.webp" style="width: 150px; height: auto;">
+                        <h2 class="subtitle fw-bold text-white m-0">Miguel Chamorro</h2>
+                        <p class="text text-white">Desarrollador Web</p>
+                        <div class="py-5"></div>
+                        <fieldset class="border border-2 p-2 rounded mt-5" style="width: 80%;">
+                            <legend class="float-none w-auto text fw-bold text-white px-2 gap-2 d-flex"><i
+                                    class="bi bi-trophy icon"></i>Logros</legend>
+                            <ul type="circle-fill">
+                                <li class="text-white text">HTML</li>
+                                <li class="text-white text">CSS</li>
+                                <li class="text-white text">JavaScript</li>
+                                <li class="text-white text">PHP</li>
+                                <li class="text-white text">WordPress</li>
+                                <li class="text-white text">Elementor</li>
+                                <li class="text-white text">Adobe XD</li>
+                                <li class="text-white text">Figma</li>
+                            </ul>
+                        </fieldset>
+                        <img class="mt-5" src="../content/rsc/svg/complete_smartphone.png"
+                            style="width: 80%; height: auto;">
                     </div>
                 </div>
             </div>
@@ -168,6 +200,7 @@
 
     <script src="../node_modules/bootstrap-icons/font/bootstrap-icons.json"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../content/js/form.js"></script>
 </body>
 
 </html>
