@@ -1,15 +1,14 @@
 {
-  "name": "portfolio",
+  "name": "mchmb00e.github.io",
   "version": "1.0.0",
-  "description": "Miguel Chamorro Portfolio",
-  "main": "index.html",
+  "description": "",
+  "main": "js/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Miguel Chamorro",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^5.3.2",
-    "bootstrap-icons": "^1.11.2"
+    "jquery": "^3.7.1"
   }
 }
